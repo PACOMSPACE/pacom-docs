@@ -22,8 +22,35 @@
               {
                 "group": "开始使用",
                 "pages": [
-                  "index",
-                  "products/getting-started"
+                  "index"
+                ]
+              },
+              {
+                "group": "指南",
+                "pages": [
+                  "guides/design",
+                  "guides/installation",
+                  "guides/user"
+                ]
+              },
+              {
+                "group": "平台",
+                "pages": [
+                  "platform/overview"
+                ]
+              },
+              {
+                "group": "设备",
+                "pages": [
+                  "devices/multifunction-sensor",
+                  "devices/air-quality-sensor",
+                  "devices/edge-gateway",
+                  "devices/wireless-adapter",
+                  "devices/lighting-controller",
+                  "devices/vrf-gateway",
+                  "devices/fan-coil-thermostat",
+                  "devices/touch-panel",
+                  "devices/self-powered-switch"
                 ]
               }
             ]
@@ -32,10 +59,33 @@
             "tab": "开发文档",
             "groups": [
               {
-                "group": "接入指南",
+                "group": "开发入门",
                 "pages": [
                   "developers/index",
+                  "developers/architecture",
                   "developers/preparation"
+                ]
+              },
+              {
+                "group": "接口与数据",
+                "pages": [
+                  "developers/interfaces",
+                  "developers/data-model"
+                ]
+              },
+              {
+                "group": "设备集成",
+                "pages": [
+                  "developers/device-onboarding",
+                  "developers/data-events",
+                  "developers/control-state"
+                ]
+              },
+              {
+                "group": "示例与排错",
+                "pages": [
+                  "developers/examples",
+                  "developers/troubleshooting"
                 ]
               }
             ]

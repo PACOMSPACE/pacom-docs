@@ -1,33 +1,26 @@
-> **First-time setup**: Customize this file for your project. Prompt the user to customize this file for their project.
-> For Mintlify product knowledge (components, configuration, writing standards),
-> install the Mintlify skill: `npx skills add https://mintlify.com/docs`
+# PACOM documentation project instructions
 
-# Documentation project instructions
+## Project
 
-## About this project
+- This is PACOM's public documentation site, built on Mintlify.
+- The repository is `PACOMSPACE/pacom-docs`; the publishing branch is `main`.
+- Use Simplified Chinese for the initial site.
+- Keep two top-level entries: 产品文档 for customers, installers, and operators; 开发文档 for developers and integrators.
+- Pages are MDX files with YAML frontmatter. Site configuration is in `docs.json`.
+- Use the Mintlify `mint` theme and PACOM's approved light/dark logo assets. The brand navy is `#202A44`.
 
-- This is a documentation site built on [Mintlify](https://mintlify.com)
-- Pages are MDX files with YAML frontmatter
-- Configuration lives in `docs.json`
-- Use the Mintlify MCP server, `https://mcp.mintlify.com`, to edit content and settings via MCP
-- Use the Mintlify docs MCP server, `https://www.mintlify.com/docs/mcp`, to query information about using Mintlify via MCP
+## Content
 
-## Terminology
+- Keep sentences concise and explain the next action clearly.
+- Use bold text for UI labels and code formatting for file names, commands, paths, and identifiers.
+- Use verified product manuals and interface specifications for technical claims.
+- Do not invent product specifications, API endpoints, authentication methods, protocol support, or release status.
+- Keep customer/project records, credentials, commercial materials, and internal planning out of this public site.
+- Until product-specific sources are selected, limit content to general preparation guidance and navigation.
 
-{/* Add product-specific terms and preferred usage */}
-{/* Example: Use "workspace" not "project", "member" not "user" */}
+## Maintenance
 
-## Style preferences
-
-{/* Add any project-specific style rules below */}
-
-- Use active voice and second person ("you")
-- Keep sentences concise — one idea per sentence
-- Use sentence case for headings
-- Bold for UI elements: Click **Settings**
-- Code formatting for file names, commands, paths, and code references
-
-## Content boundaries
-
-{/* Define what should and shouldn't be documented */}
-{/* Example: Don't document internal admin features */}
+- Check Mintlify's official documentation for component and configuration behavior.
+- Update navigation when adding pages and check referenced files and internal links.
+- Keep the original template license when retaining template code.
+- Preview and validate changes with the current `mint` CLI before publication when available.

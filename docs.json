@@ -33,14 +33,8 @@
               {
                 "group": "智能建筑平台",
                 "pages": [
-                  {
-                    "group": "开始使用",
-                    "expanded": true,
-                    "pages": [
-                      "platform/overview",
-                      "platform/quickstart"
-                    ]
-                  },
+                  "platform/overview",
+                  "platform/quickstart",
                   {
                     "group": "配置",
                     "pages": [
@@ -65,19 +59,14 @@
                     ]
                   },
                   {
-                    "group": "设置",
+                    "group": "机构与账户",
                     "pages": [
                       "platform/organization",
                       "platform/account"
                     ]
                   },
-                  {
-                    "group": "帮助",
-                    "pages": [
-                      "platform/assistant",
-                      "platform/support"
-                    ]
-                  }
+                  "platform/assistant",
+                  "platform/support"
                 ]
               },
               {

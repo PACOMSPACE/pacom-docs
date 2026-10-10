@@ -53,3 +53,89 @@ img.nav-logo {
   left: -6.350996%;
   top: -18.947906%;
 }
+
+/* Product views: unchanged source pixels, with a separate annotation layer. */
+.pacom-eg20-page { --pacom-ink: #202a44; --pacom-muted: #667085; --pacom-rule: #e6e8ed; }
+.pacom-product-tabs[role="tablist"] {
+  gap: 0 !important; border: 1px solid var(--pacom-rule); border-radius: 6px;
+  overflow-x: auto; width: fit-content; min-width: 0 !important; max-width: 100%; padding: 0 !important;
+}
+.pacom-product-tabs [role="tab"] {
+  border: 0 !important; border-right: 1px solid var(--pacom-rule) !important;
+  padding: 12px 24px !important; margin: 0 !important; white-space: nowrap;
+  color: var(--pacom-muted) !important; background: transparent; font-size: 14px !important;
+}
+.pacom-product-tabs [role="tab"]:last-child { border-right: 0 !important; }
+.pacom-product-tabs [data-component-part="tab-button"] {
+  color: inherit !important; padding: 0 !important; margin: 0 !important;
+  border: 0 !important; font-weight: 500; line-height: 1.5;
+}
+.pacom-product-tabs [role="tab"][aria-selected="true"] { color: #fff !important; background: var(--pacom-ink); }
+.pacom-product-viewer { margin: 24px 0; }
+.pacom-technical-view { margin: 0 !important; min-width: 0; }
+.pacom-technical-view figcaption, .pacom-gallery-status {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  margin: 0 0 16px !important; font-size: 14px; font-weight: 500; font-style: normal;
+  color: inherit;
+}
+.pacom-technical-view figcaption button, .pacom-gallery-actions button, .pacom-gallery-actions a,
+.pacom-photo-dialog-header button, .pacom-photo-dialog-footer a {
+  font: inherit; font-size: 12px; font-weight: 400; color: var(--pacom-muted, #667085);
+  cursor: pointer; text-decoration: none; border: 0; background: transparent; padding: 4px 0;
+}
+.pacom-technical-view figcaption button:hover, .pacom-gallery-actions button:hover,
+.pacom-gallery-actions a:hover, .pacom-photo-dialog-header button:hover, .pacom-photo-dialog-footer a:hover { color: #202a44; text-decoration: underline; }
+.pacom-photo-button { display: block; width: 100%; border: 0; padding: 0; margin: 0; background: #fff; cursor: zoom-in; border-radius: 3px; overflow: hidden; }
+.pacom-photo-canvas { position: relative; display: block; width: 100%; overflow: hidden; background: #fff; }
+.pacom-photo-canvas img {
+  display: block; position: absolute !important; max-width: none !important; height: auto !important;
+  margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important;
+}
+.pacom-annotation { position: static; color: #50555f; font-family: inherit; font-size: 12px; font-weight: 400; line-height: 1.4; }
+.pacom-leader-vertical, .pacom-leader-horizontal { position: absolute; pointer-events: none; border-color: #8e939d; border-style: solid; border-width: 0; }
+.pacom-leader-vertical { width: 0; border-left-width: 1px; }
+.pacom-leader-horizontal { height: 0; border-top-width: 1px; }
+.pacom-leader-dot { position: absolute; width: 3px; height: 3px; transform: translate(-50%, -50%); background: #777d87; border-radius: 50%; pointer-events: none; }
+.pacom-leader-label { position: absolute; transform: translate(-50%, -50%); background: #fff; padding: 3px 6px; white-space: nowrap; pointer-events: none; }
+.pacom-leader-label-side { font-size: 12px; }
+.pacom-technical-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 36px; }
+.pacom-mobile-labels { display: none; }
+.pacom-gallery { max-width: 800px; margin: 0 auto; }
+.pacom-gallery-status span:last-child { color: var(--pacom-muted); font-size: 12px; font-weight: 400; }
+.pacom-gallery-main { border-bottom: 1px solid var(--pacom-rule); }
+.pacom-gallery-actions { display: flex; justify-content: flex-end; gap: 24px; padding: 10px 0 18px; }
+.pacom-gallery-thumbnails { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.pacom-gallery-thumbnails button {
+  min-width: 0; border: 1px solid var(--pacom-rule); background: #fff; border-radius: 5px; padding: 5px;
+  color: #667085; cursor: pointer; overflow: hidden;
+}
+.pacom-gallery-thumbnails button[aria-pressed="true"] { border-color: #202a44; box-shadow: inset 0 0 0 1px #202a44; color: #202a44; }
+.pacom-thumbnail-label { display: block; font-size: 10px; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 3px 0; }
+.pacom-viewer-mounting { max-width: 700px; margin-left: auto; margin-right: auto; }
+.pacom-viewer-accessories { max-width: 900px; margin-left: auto; margin-right: auto; }
+.pacom-photo-dialog { --pacom-muted: #667085; color: #202a44; background: #fff; border: 0; border-radius: 8px; padding: 0; width: min(1120px, calc(100vw - 48px)); max-width: none; max-height: calc(100dvh - 48px); margin: auto; overflow: auto; box-shadow: 0 12px 60px rgba(0,0,0,.18); }
+.pacom-photo-dialog::backdrop { background: rgba(17,24,39,.62); }
+.pacom-photo-dialog-header { position: sticky; top: 0; z-index: 2; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; font-size: 15px; font-weight: 500; border-bottom: 1px solid #e6e8ed; }
+.pacom-photo-dialog-header button { font-size: 14px; padding: 8px; }
+.pacom-photo-dialog-image { padding: 24px; }
+.pacom-photo-dialog-footer { display: flex; justify-content: flex-end; padding: 0 24px 20px; }
+.pacom-photo-dialog .pacom-annotation { font-size: 14px; }
+.pacom-photo-button:focus-visible, .pacom-product-viewer button:focus-visible, .pacom-product-viewer a:focus-visible, .pacom-photo-dialog button:focus-visible, .pacom-photo-dialog a:focus-visible { outline: 2px solid #202a44; outline-offset: 3px; }
+.dark .pacom-eg20-page { --pacom-muted: #a8afbd; --pacom-rule: #353a45; }
+.dark .pacom-product-tabs [role="tab"][aria-selected="true"] { background: #dce3f5; color: #202a44 !important; }
+.dark .pacom-technical-view figcaption button:hover, .dark .pacom-gallery-actions a:hover, .dark .pacom-gallery-actions button:hover { color: #dce3f5; }
+@media (max-width: 640px) {
+  .pacom-product-tabs [role="tab"] { padding: 10px 12px !important; font-size: 13px !important; }
+  .pacom-technical-pair { grid-template-columns: 1fr; gap: 28px; margin-top: 28px; }
+  .pacom-annotation { font-size: 9px; }
+  .pacom-technical-view .pacom-annotation { display: none; }
+  .pacom-mobile-labels { display: flex; flex-wrap: wrap; gap: 6px 18px; list-style: none !important; padding: 10px 0 0 !important; margin: 0 !important; color: #667085; font-size: 12px; line-height: 1.7; }
+  .pacom-mobile-labels li { padding: 0 !important; margin: 0 !important; }
+  .dark .pacom-mobile-labels { color: #a8afbd; }
+  .pacom-gallery-thumbnails { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pacom-photo-dialog { width: calc(100vw - 20px); max-height: calc(100dvh - 20px); }
+  .pacom-photo-dialog-image { padding: 16px 10px; overflow-x: auto; }
+  .pacom-photo-dialog .pacom-photo-canvas { min-width: 760px; }
+  .pacom-photo-dialog .pacom-annotation { font-size: 12px; }
+  .pacom-photo-dialog-header { padding: 12px 16px; }
+}

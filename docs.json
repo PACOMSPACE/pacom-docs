@@ -7,10 +7,7 @@
     "light": "#8EA8DB",
     "dark": "#202A44"
   },
-  "favicon": {
-    "light": "/images/favicon-light.svg",
-    "dark": "/images/favicon-dark.svg"
-  },
+  "favicon": "/favicon.svg",
   "navigation": {
     "languages": [
       {
@@ -128,3 +125,4 @@
   },
   "description": "PACOM 产品文档与开发者指南。"
 }
+

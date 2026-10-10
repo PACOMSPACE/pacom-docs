@@ -1,53 +1,57 @@
 ---
 title: "PACOM 智能建筑平台"
-description: "从项目规划与交付，到建筑的日常运行与管理。"
-sidebarTitle: "智能建筑平台"
+description: "按任务查阅规划、交付、运营与管理文档。"
+sidebarTitle: "平台概览"
 ---
 
-PACOM 智能建筑平台（PACOM Station）面向建筑业主、设施运营人员与集成商。以项目、空间和设备为基础，组织照明、暖通空调、室内环境与能源管理，衔接现场部署、验证交付和日常运营。
+PACOM 智能建筑平台面向建筑业主、运营人员与集成商。通过 **PACOM Station** 工作区组织项目、空间和设备，管理照明、暖通空调、室内环境与能源，衔接现场部署、验证交付和日常运营。
 
 ## 从你的任务开始
 
 <Columns cols={3}>
-  <Card title="了解平台" icon="compass" href="/platform/introduction">
-    认识应用范围、系统组成和各方分工。
+  <Card title="了解与入门" icon="compass" href="/platform/introduction">
+    认识系统与典型场景，按角色选择开始路径。
   </Card>
-
-  <Card title="项目交付" icon="screwdriver-wrench" href="/platform/configuration-delivery">
-    从空间与设备规划，走到现场部署、验证和交付。
+  <Card title="规划与交付" icon="screwdriver-wrench" href="/platform/projects-devices">
+    建立空间和设备规划，再完成配置、现场实施与交付。
   </Card>
-
-  <Card title="日常使用" icon="sliders" href="/platform/operations">
-    查看运行、控制设备、执行场景和处理异常。
+  <Card title="运营与维护" icon="sliders" href="/platform/operations">
+    查看运行、控制设备、处理异常并核对历史变化。
   </Card>
 </Columns>
+
+新项目先[核对机构与授权](/platform/organization-account#成员与权限)，再规划与交付；已有项目先核对交付范围、运行数据来源和更新时间。普通成员从 Station 的**我的区域**使用授权功能区，机构管理员另查[机构与账户](/platform/organization-account)。
 
 ## 四大应用
 
 | 应用 | 关注的工作 |
 | --- | --- |
-| [照明](/platform/operations#照明) | 照明状态、感应与调光、手动控制和自动恢复。 |
-| [暖通空调](/platform/operations#暖通空调) | 温度、模式、设定与运行策略，以及系统接入条件。 |
-| [室内环境](/platform/operations#室内环境) | 环境指标、参考提示、变化趋势和数据质量。 |
-| [能源](/platform/analysis-reports#能耗与碳排放) | 计量与分项、用能趋势、异常核查及碳排放口径。 |
+| [照明](/platform/operations#照明) | 查看状态，协调感应、调光、手动控制与恢复自动。 |
+| [暖通空调](/platform/operations#暖通空调) | 区分室温、设定与运行状态，按设备能力调整。 |
+| [室内环境](/platform/operations#室内环境) | 查看已接入指标，核对参考范围、趋势与数据质量。 |
+| [能源](/platform/analysis-reports#能耗与碳排放) | 明确计量边界，分析用电、电费与碳排放。 |
 
 ## 系统如何协作
 
-**Station** 组织规划、配置和运营；**部署 App** 完成现场识别、绑定、配置与测试；**边缘网关** 衔接平台与现场设备网络；**传感器、控制器与终端** 采集信息或执行相应控制。
+**PACOM Station** 是云端服务的 Web 工作区；**部署 App** 是独立现场工具，完成识别、绑定、配置与测试；**边缘网关** 衔接平台与现场设备网络；**传感器、控制器与终端** 采集信息或执行控制。[查看系统组成与空间概念](/platform/introduction#系统组成)。
 
-保存配置、设备应用和测试通过是不同状态。项目交付应核对实际设备、配置版本与测试记录。[查看系统分工与关键状态](/platform/introduction#系统组成)。
+**已保存、已批准、已应用、已验证、已交付**分别核对，不能相互代替；对应依据见[准备好使用的条件](/platform/introduction#如何判断已经准备好)。首版采用 PACOM 云端服务，现场与断联能力按已验证的设备、固件和配置确认。
 
 ## 文档目录
 
-| 分类 | 你可以找到 |
+| 文档 | 解决的任务 |
 | --- | --- |
-| [认识与入门](/platform/introduction) | 平台组成、典型场景、开始使用与关键概念。 |
-| [项目与设备](/platform/projects-devices) | 项目空间、楼层图、设备规划、网络与系统接入。 |
-| [配置与交付](/platform/configuration-delivery) | 应用配置、审批、现场部署、验证与交付。 |
-| [日常运营](/platform/operations) | 运行总览、监测控制、场景联动与大屏。 |
-| [告警与维护](/platform/alarms-maintenance) | 告警处理、规则、设备维护、升级与变更验证。 |
-| [分析与报告](/platform/analysis-reports) | 能耗、碳排放、环境、空间使用、健康与报告。 |
-| [机构与账户](/platform/organization-account) | 成员权限、通知安全、许可用量与数据管理。 |
-| [助手与帮助](/platform/help) | 助手的使用边界、常见问题与问题反馈。 |
+| [认识与入门](/platform/introduction) | 了解组成与场景，确认角色、入口和使用条件。 |
+| [项目与设备](/platform/projects-devices) | 建立项目空间，规划点位、设备网络和系统接入。 |
+| [配置与交付](/platform/configuration-delivery) | 保存应用设置、批准配置参数，完成现场实施、测试与交付。 |
+| [日常运营](/platform/operations) | 查看与控制四大应用，使用场景、定时、联动和大屏。 |
+| [告警与维护](/platform/alarms-maintenance) | 处理告警与工单，维护设备、升级固件并重新验证。 |
+| [分析与报告](/platform/analysis-reports) | 分析用电、碳排放、环境与设备健康，核对报告与导出。 |
+| [机构与账户](/platform/organization-account) | 管理机构、成员权限、通知、安全、许可与数据申请。 |
+| [助手与帮助](/platform/help) | 搜索对象、核对 AI 建议，查版本、排障并联系支持。 |
 
-具体功能取决于平台版本、已接入设备及经过验证的接口能力。设备资料请查阅对应产品；接口接入请进入[开发文档](/developers/index)。
+<Note>
+  当前正式版尚未接入账户、运行数据与执行等服务。规划资料和演示结果不能作为现场结果；各章节注明相应使用前提，具体功能以实际版本、服务与设备验证结果为准。
+</Note>
+
+设备型号、接线与安装要求查阅侧栏对应产品资料；接口与系统联调进入[开发文档](/developers/index)。

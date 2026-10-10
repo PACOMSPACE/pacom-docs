@@ -31,17 +31,53 @@
                 ]
               },
               {
-                "group": "平台",
+                "group": "智能建筑平台",
                 "pages": [
-                  "platform/overview",
-                  "platform/introduction",
-                  "platform/projects-devices",
-                  "platform/configuration-delivery",
-                  "platform/operations",
-                  "platform/alarms-maintenance",
-                  "platform/analysis-reports",
-                  "platform/organization-account",
-                  "platform/help"
+                  {
+                    "group": "开始使用",
+                    "expanded": true,
+                    "pages": [
+                      "platform/overview",
+                      "platform/quickstart"
+                    ]
+                  },
+                  {
+                    "group": "配置",
+                    "pages": [
+                      "platform/projects",
+                      "platform/devices",
+                      "platform/integrations",
+                      "platform/application-configuration",
+                      "platform/deployment"
+                    ]
+                  },
+                  {
+                    "group": "运营",
+                    "pages": [
+                      "platform/runtime",
+                      "platform/lighting",
+                      "platform/hvac",
+                      "platform/environment",
+                      "platform/energy",
+                      "platform/scenes",
+                      "platform/alarms",
+                      "platform/analytics"
+                    ]
+                  },
+                  {
+                    "group": "设置",
+                    "pages": [
+                      "platform/organization",
+                      "platform/account"
+                    ]
+                  },
+                  {
+                    "group": "帮助",
+                    "pages": [
+                      "platform/assistant",
+                      "platform/support"
+                    ]
+                  }
                 ]
               },
               {
@@ -64,7 +100,7 @@
             "tab": "开发文档",
             "groups": [
               {
-                "group": "开发入门",
+                "group": "开始使用",
                 "pages": [
                   "developers/index",
                   "developers/architecture",
@@ -87,7 +123,7 @@
                 ]
               },
               {
-                "group": "示例与排错",
+                "group": "示例与排查",
                 "pages": [
                   "developers/examples",
                   "developers/troubleshooting"
@@ -120,9 +156,7 @@
     ]
   },
   "footer": {
-    "socials": {
-    }
+    "socials": {}
   },
   "description": "PACOM 产品文档与开发者指南。"
 }
-

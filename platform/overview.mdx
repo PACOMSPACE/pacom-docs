@@ -1,23 +1,53 @@
 ---
 title: "PACOM 智能建筑平台"
-description: "确认平台资料的适用版本，按使用或开发任务查找文档。"
+description: "从项目规划与交付，到建筑的日常运行与管理。"
 sidebarTitle: "智能建筑平台"
 ---
 
-本页提供平台资料的查阅指引；对应版本的功能说明与具体操作步骤将在正式资料核验后补充。
+PACOM 智能建筑平台（PACOM Station）面向建筑业主、设施运营人员与集成商。以项目、空间和设备为基础，组织照明、暖通空调、室内环境与能源管理，衔接现场部署、验证交付和日常运营。
 
-## 确认适用版本
+## 从你的任务开始
 
-查阅资料前记录平台名称、版本与部署环境，核对说明的适用范围。
+<Columns cols={3}>
+  <Card title="了解平台" icon="compass" href="/platform/introduction">
+    认识应用范围、系统组成和各方分工。
+  </Card>
 
-## 查找使用资料
+  <Card title="项目交付" icon="screwdriver-wrench" href="/platform/configuration-delivery">
+    从空间与设备规划，走到现场部署、验证和交付。
+  </Card>
 
-从[用户指南](/guides/user)整理使用任务；可用功能和操作路径以对应版本的正式说明为准。
+  <Card title="日常使用" icon="sliders" href="/platform/operations">
+    查看运行、控制设备、执行场景和处理异常。
+  </Card>
+</Columns>
 
-## 准备开发接入
+## 四大应用
 
-从[开发文档](/developers/index)确认接入目标，准备接口资料、测试环境与验收目标。
+| 应用 | 关注的工作 |
+| --- | --- |
+| [照明](/platform/operations#照明) | 照明状态、感应与调光、手动控制和自动恢复。 |
+| [暖通空调](/platform/operations#暖通空调) | 温度、模式、设定与运行策略，以及系统接入条件。 |
+| [室内环境](/platform/operations#室内环境) | 环境指标、参考提示、变化趋势和数据质量。 |
+| [能源](/platform/analysis-reports#能耗与碳排放) | 计量与分项、用能趋势、异常核查及碳排放口径。 |
 
-## 记录待核实事项
+## 系统如何协作
 
-整理功能、权限或集成方面的问题，附上版本与使用场景，确认后再开展操作。
+**Station** 组织规划、配置和运营；**部署 App** 完成现场识别、绑定、配置与测试；**边缘网关** 衔接平台与现场设备网络；**传感器、控制器与终端** 采集信息或执行相应控制。
+
+保存配置、设备应用和测试通过是不同状态。项目交付应核对实际设备、配置版本与测试记录。[查看系统分工与关键状态](/platform/introduction#系统组成)。
+
+## 文档目录
+
+| 分类 | 你可以找到 |
+| --- | --- |
+| [认识与入门](/platform/introduction) | 平台组成、典型场景、开始使用与关键概念。 |
+| [项目与设备](/platform/projects-devices) | 项目空间、楼层图、设备规划、网络与系统接入。 |
+| [配置与交付](/platform/configuration-delivery) | 应用配置、审批、现场部署、验证与交付。 |
+| [日常运营](/platform/operations) | 运行总览、监测控制、场景联动与大屏。 |
+| [告警与维护](/platform/alarms-maintenance) | 告警处理、规则、设备维护、升级与变更验证。 |
+| [分析与报告](/platform/analysis-reports) | 能耗、碳排放、环境、空间使用、健康与报告。 |
+| [机构与账户](/platform/organization-account) | 成员权限、通知安全、许可用量与数据管理。 |
+| [助手与帮助](/platform/help) | 助手的使用边界、常见问题与问题反馈。 |
+
+具体功能取决于平台版本、已接入设备及经过验证的接口能力。设备资料请查阅对应产品；接口接入请进入[开发文档](/developers/index)。

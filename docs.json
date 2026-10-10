@@ -36,7 +36,15 @@
               {
                 "group": "平台",
                 "pages": [
-                  "platform/overview"
+                  "platform/overview",
+                  "platform/introduction",
+                  "platform/projects-devices",
+                  "platform/configuration-delivery",
+                  "platform/operations",
+                  "platform/alarms-maintenance",
+                  "platform/analysis-reports",
+                  "platform/organization-account",
+                  "platform/help"
                 ]
               },
               {

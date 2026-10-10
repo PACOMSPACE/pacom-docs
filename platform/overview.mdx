@@ -57,16 +57,16 @@ flowchart TB
 | **设备网络** | 组织现场通信与部署。网络范围与空间层级分别管理。 |
 | **照明回路与回路组** | 回路对应控制器及其负载；回路组组织共同控制。它们与用于管理的自定义分组用途不同。 |
 
-空间调整在**项目**中完成；设备规划、网络和接入在**设备**中核对。分别查阅[项目管理](/platform/projects)与[设备管理](/platform/devices)。
+空间调整在**项目**中完成；设备规划、网络和接入在**设备**中核对。分别查阅[项目与空间](/platform/projects)与[设备与网络](/platform/devices)。
 
 ## 四类应用
 
 | 应用 | 关注的工作 |
 | --- | --- |
-| [照明控制](/platform/lighting) | 查看状态，协调感应、调光、手动控制与恢复自动。 |
+| [照明](/platform/lighting) | 查看状态，协调感应、调光、手动控制与恢复自动。 |
 | [暖通空调](/platform/hvac) | 区分室温、设定与运行状态，按设备能力调整。 |
 | [室内环境](/platform/environment) | 查看已接入指标，核对参考范围、趋势与数据质量。 |
-| [能源管理](/platform/energy) | 明确计量边界，分析用电、电费与碳排放。 |
+| [能源](/platform/energy) | 明确计量边界，分析用电、电费与碳排放。 |
 
 ## 典型场景
 
@@ -79,7 +79,7 @@ flowchart TB
     - **需要什么**：已绑定并验证的传感器、照明控制器及兼容负载。恒照度控制还需有效照度源与调光能力；开关型回路只能开关，不能按中间亮度调光。
     - **核对什么**：以控制器回报的开关、亮度和现场测试为准。同区感应开关与恒照度由控制器本地执行，无需另建联动。手动后的恢复按已应用规则验证。
 
-    继续阅读[照明运行与控制](/platform/lighting)或[部署调试](/platform/deployment)。
+    继续阅读[照明](/platform/lighting)或[部署与交付](/platform/deployment)。
 
   </Accordion>
   <Accordion title="暖通空调：会议室温度与运行状态核查" description="区分室温、设定与实际运行，按设备能力调整。">
@@ -106,7 +106,7 @@ flowchart TB
     - **需要什么**：完成验证的表计或计量来源，正确的倍率、分项关系、时间范围与数据完整性。比较前后变化时，还需考虑天气、占用和运行时间的差异。
     - **核对什么**：计量值与按功率、亮度估算的值分别理解，缺失数据不记为零。碳排放计算须明确活动数据、因子与有效版本；不能仅凭一条曲线承诺节能率。
 
-    继续阅读[能耗与碳排放](/platform/energy)。
+    继续阅读[能源](/platform/energy)。
 
   </Accordion>
 </AccordionGroup>
@@ -123,10 +123,10 @@ flowchart TB
   <Card title="快速入门" icon="compass" href="/platform/quickstart">
     获得访问，选择机构，按角色进入工作。
   </Card>
-  <Card title="项目管理" icon="screwdriver-wrench" href="/platform/projects">
+  <Card title="项目与空间" icon="screwdriver-wrench" href="/platform/projects">
     建立项目、空间和设备，再配置、部署与交付。
   </Card>
-  <Card title="运行总览" icon="sliders" href="/platform/runtime">
+  <Card title="总览" icon="sliders" href="/platform/runtime">
     查看状态、控制设备、处理异常并分析变化。
   </Card>
 </Columns>
@@ -137,8 +137,8 @@ flowchart TB
 | --- | --- |
 | **平台介绍** | 平台组成与典型场景（本页）。 |
 | [**快速入门**](/platform/quickstart) | 获得访问，选择机构，按角色开始使用。 |
-| **配置** | [项目管理](/platform/projects) · [设备管理](/platform/devices) · [系统接入](/platform/integrations) · [应用配置](/platform/application-configuration) · [部署调试](/platform/deployment) |
-| **运营** | [运行总览](/platform/runtime) · [照明控制](/platform/lighting) · [暖通空调](/platform/hvac) · [室内环境](/platform/environment) · [能源管理](/platform/energy) · [场景](/platform/scenes) · [告警](/platform/alarms) · [数据分析](/platform/analytics) |
+| **配置** | [项目与空间](/platform/projects) · [设备与网络](/platform/devices) · [系统接入](/platform/integrations) · [应用配置](/platform/application-configuration) · [部署与交付](/platform/deployment) |
+| **运营** | [总览](/platform/runtime) · [照明](/platform/lighting) · [暖通空调](/platform/hvac) · [室内环境](/platform/environment) · [能源](/platform/energy) · [场景](/platform/scenes) · [告警](/platform/alarms) · [数据分析](/platform/analytics) |
 | **机构与账户** | [机构设置](/platform/organization) · [我的账户](/platform/account) |
 | [**智能助手**](/platform/assistant) | 使用平台内的智能助手。 |
 | [**帮助与支持**](/platform/support) | 查阅帮助、排查问题与联系支持。 |

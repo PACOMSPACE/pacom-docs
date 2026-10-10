@@ -2,3 +2,54 @@ img.nav-logo {
   height: 24px !important;
   width: auto !important;
 }
+
+/* Present the original product pixels inside a compact, theme-independent frame. */
+.pacom-product-photo {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #f5f6f8;
+  border: 1px solid rgba(32, 42, 68, 0.08);
+  border-radius: 16px;
+  margin: 20px 0 28px;
+}
+
+.pacom-product-photo img {
+  position: absolute !important;
+  max-width: none !important;
+  height: auto !important;
+  margin: 0 !important;
+}
+
+.pacom-eg20-overview { aspect-ratio: 2920 / 1400; }
+.pacom-eg20-overview img {
+  width: 102.739726% !important;
+  left: -1.369863%;
+  top: -57.142857%;
+}
+
+.pacom-eg20-rear { aspect-ratio: 2840 / 720; }
+.pacom-eg20-rear img {
+  width: 105.633803% !important;
+  left: -2.816901%;
+  top: -158.333333%;
+}
+
+.pacom-eg20-side { aspect-ratio: 1873 / 720; }
+.pacom-eg20-side img {
+  width: 160.170849% !important;
+  left: -30.058729%;
+  top: -158.333333%;
+}
+
+.pacom-eg20-bracket {
+  aspect-ratio: 2661 / 1958;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pacom-eg20-bracket img {
+  width: 112.739572% !important;
+  left: -6.350996%;
+  top: -18.947906%;
+}

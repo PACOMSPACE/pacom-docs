@@ -1,91 +1,31 @@
 ---
 title: "PACOM 边缘网关"
-description: "查看 EG20 边缘网关的产品外观、接口位置和安装支架。"
+description: "EG20 · 产品外观、接口位置、安装支架与附件"
 sidebarTitle: "边缘网关"
+mode: "wide"
 ---
 
-## 产品外观
+import { EG20Viewer } from "/snippets/eg20-product-views.jsx";
 
-EG20 边缘网关的前面设有 PACOM 标识与电源按键，接口分布在背面和侧面。以下图片用于辨认产品与接口位置。
+<div className="pacom-eg20-page">
+  <Tabs sync={false} className="pacom-product-tabs">
+    <Tab title="产品概览">
+      前面设有电源按键，连接接口分布在背面与侧面。点击图片可放大查看接口位置。
 
-<div className="pacom-product-photo pacom-eg20-overview">
-  <img
-    src="/images/devices/eg20/eg20-overview.png"
-    alt="EG20 边缘网关斜视图，显示前面 PACOM 标识、电源按键和侧面三处 USB 接口"
-    width="3000"
-    height="3000"
-    loading="eager"
-    noZoom
-  />
+      <EG20Viewer section="overview" />
+    </Tab>
+    <Tab title="产品图片">
+      <EG20Viewer section="gallery" />
+    </Tab>
+    <Tab title="安装支架">
+      <EG20Viewer section="mounting" />
+
+      支架图用于辨认安装挂孔和固定螺钉的位置。安装尺寸与操作步骤请以对应版本的安装说明为准。
+    </Tab>
+    <Tab title="附件示意">
+      <EG20Viewer section="accessories" />
+
+      图中展示网关、电源适配器、安装支架、螺钉与快速入门指南。实际随箱物品以所购版本的包装清单为准。
+    </Tab>
+  </Tabs>
 </div>
-
-## 接口位置
-
-### 背面
-
-背面图片可用于核对网络、电源、显示连接及其他接口的位置。连接时请按机身标识和对应版本的接口说明操作。
-
-<div className="pacom-product-photo pacom-eg20-rear">
-  <img
-    src="/images/devices/eg20/eg20-rear-ports.png"
-    alt="EG20 边缘网关背面正视图，显示 USB-C 外形接口、音频插孔、卡槽、两处 HDMI 接口、12V 电源标识与网口"
-    width="3000"
-    height="3000"
-    loading="lazy"
-    noZoom
-  />
-</div>
-
-### 侧面
-
-侧面设有三处 USB-A 外形接口。接口颜色仅用于外观辨认，具体功能与规格以对应版本的产品说明为准。
-
-<div className="pacom-product-photo pacom-eg20-side">
-  <img
-    src="/images/devices/eg20/eg20-side-ports.png"
-    alt="EG20 边缘网关侧面正视图，显示两处蓝色和一处黑色 USB-A 外形接口"
-    width="3000"
-    height="3000"
-    loading="lazy"
-    noZoom
-  />
-</div>
-
-## 安装接线
-
-### 安装支架
-
-下图展示安装支架与机身底部的关系。固定尺寸、螺钉要求、安装方向和接线步骤将在经确认的安装说明中列出。
-
-<div className="pacom-product-photo pacom-eg20-bracket">
-  <img
-    src="/images/devices/eg20/eg20-mounting-bracket.png"
-    alt="EG20 边缘网关底部与安装支架，显示支架安装位置、固定螺钉和挂孔"
-    width="3000"
-    height="3000"
-    loading="lazy"
-    noZoom
-  />
-</div>
-
-<Accordion title="查看外观与附件示意">
-  <img
-    src="/images/devices/eg20/eg20-accessories.png"
-    alt="EG20 边缘网关与电源适配器、安装支架、螺钉和快速入门指南的外观示意"
-    className="w-full h-auto rounded-xl"
-    width="3840"
-    height="2160"
-    loading="lazy"
-    noZoom
-  />
-
-  图片用于展示外观与附件。实际随箱物品以所购版本的包装清单为准。
-</Accordion>
-
-## 配置使用
-
-配置入口、连接设置和验收方法将在对应型号与版本的操作说明确认后补充。
-
-## 维护排错
-
-连接异常检查、维护要求和问题反馈所需记录将在对应型号与版本的维护说明确认后补充。

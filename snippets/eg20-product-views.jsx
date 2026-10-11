@@ -33,7 +33,7 @@ export const EG20Viewer = ({ icons = {} }) => {
       labels: [{ text: "电源按键", anchors: [[2327, 1553]], label: [2327, 1795], line: 1750 }],
     },
     side: {
-      name: "侧面接口", file: "eg20-side-ports.png", crop: [530, 1110, 1940, 760],
+      name: "侧面接口", file: "eg20-side-ports.png", crop: [120, 1110, 2760, 760],
       alt: "EG20 侧面正视图，标出三处 USB-A 外形接口的位置",
       labels: [{ text: "USB-A 接口", anchors: [[1057, 1519], [1419, 1519], [1782, 1519]], label: [1419, 1795], line: 1750 }],
     },
@@ -54,8 +54,56 @@ export const EG20Viewer = ({ icons = {} }) => {
   };
   const gallery = [views.hero, views.left, views.rearAngle, views.front, views.rear, views.side, views.top];
 
+  // A shared projection scale keeps the long edge, short edge and thickness honest.
+  // UniFi's 640px drawings show a 340px-wide body inside a padded 456px frame.
+  const projectionScale = 340 / 2491;
+  const sheetImage = (view, sourceCenterX, centerY) => ({
+    view, left: 320 - sourceCenterX * projectionScale,
+    top: centerY - 1500 * projectionScale, width: 3000 * projectionScale,
+  });
+  const drawings = [
+    {
+      name: "前后视图", file: views.rear.file, sheet: [640, 386],
+      images: [sheetImage(views.rear, 1499.5, 100), sheetImage(views.front, 1500.5, 314)],
+      downloads: [views.rear, views.front],
+      labels: [
+        { text: "USB-C 接口", anchors: [[199.27, 99.18]], label: [170, 38], line: 60 },
+        { text: "存储卡槽", anchors: [[244.86, 87.44]], label: [250, 38], line: 60 },
+        { text: "12V 电源接口", anchors: [[401.01, 99.18]], label: [389, 38], line: 60 },
+        { text: "以太网接口", anchors: [[441, 103.28]], label: [477, 38], line: 60 },
+        { text: "音频接口", anchors: [[245.13, 100]], label: [200, 175], line: 148 },
+        { text: "HDMI 接口", anchors: [[292.77, 103.28], [352.55, 103.28]], label: [323, 175], line: 148 },
+        { text: "电源按键", anchors: [[432.81, 321.23]], label: [433, 254], line: 278 },
+      ],
+    },
+    { name: "俯视图", file: views.top.file, sheet: [640, 383], images: [sheetImage(views.top, 1500, 165)], labels: [], caption: "俯视图" },
+    {
+      name: "侧面接口", file: views.side.file, sheet: [640, 220],
+      images: [sheetImage(views.side, 1499, 110)],
+      labels: [{ text: "USB-A 接口", anchors: [[259.67, 112.59], [309.08, 112.59], [358.63, 112.59]], label: [309, 185], line: 160 }],
+    },
+  ];
+
+  const renderDrawing = (drawing) => {
+    const [w, h] = drawing.sheet;
+    return <span className="pacom-drawing-canvas" style={{ aspectRatio: w + " / " + h, "--pacom-photo-ratio": w / h }}>
+      {drawing.images.map(({ view, left, top, width }) => <img key={view.file} src={base + view.file} alt={view.alt} width="3000" height="3000" loading="lazy" draggable="false" style={{ width: width / w * 100 + "%", left: left / w * 100 + "%", top: top / h * 100 + "%" }} />)}
+      {drawing.labels.map((item, i) => <span key={i} className="pacom-drawing-annotation" aria-hidden="true">
+        {item.anchors.map(([ax, ay], j) => <span key={j}>
+          <span className="pacom-leader-vertical" style={{ left: ax / w * 100 + "%", top: Math.min(ay, item.line) / h * 100 + "%", height: Math.abs(ay - item.line) / h * 100 + "%" }} />
+          <span className="pacom-leader-dot" style={{ left: ax / w * 100 + "%", top: ay / h * 100 + "%" }} />
+        </span>)}
+        <span className="pacom-leader-horizontal" style={{ left: Math.min(item.label[0], ...item.anchors.map(p => p[0])) / w * 100 + "%", top: item.line / h * 100 + "%", width: (Math.max(item.label[0], ...item.anchors.map(p => p[0])) - Math.min(item.label[0], ...item.anchors.map(p => p[0]))) / w * 100 + "%" }} />
+        <span className="pacom-leader-vertical" style={{ left: item.label[0] / w * 100 + "%", top: Math.min(item.label[1], item.line) / h * 100 + "%", height: Math.abs(item.label[1] - item.line) / h * 100 + "%" }} />
+        <span className="pacom-leader-label" style={{ left: item.label[0] / w * 100 + "%", top: item.label[1] / h * 100 + "%" }}>{item.text}</span>
+      </span>)}
+      {drawing.caption && <span className="pacom-drawing-caption">{drawing.caption}</span>}
+    </span>;
+  };
+
   const renderPhoto = (view, annotated = false, galleryFrame = false) => {
-    const crop = galleryFrame ? [0, 0, 3000, 3000] : view.crop;
+    if (view.sheet) return renderDrawing(view);
+    const crop = galleryFrame ? [-195, -195, 3390, 3390] : view.crop;
     const [x, y, w, h] = crop || [0, 0, 3840, 2160];
     const px = (value) => (value - x) / w * 100;
     const py = (value) => (value - y) / h * 100;
@@ -87,7 +135,7 @@ export const EG20Viewer = ({ icons = {} }) => {
 
   const actions = (view, annotated = false) => (
     <div className="pacom-image-actions">
-      <a href={base + view.file} download aria-label={"下载" + view.name}>{icons.download}<span className="pacom-action-label">下载</span></a>
+      {(view.downloads || [view]).map(item => <a key={item.file} href={base + item.file} download aria-label={"下载" + item.name} title={"下载" + item.name + "原图"}>{icons.download}<span className="pacom-action-label">{view.downloads ? item.name : "下载"}</span></a>)}
       <button type="button" onClick={() => setZoomed({ view, annotated })} aria-label={"放大" + view.name}>{icons.zoom}<span className="pacom-action-label">放大</span></button>
     </div>
   );
@@ -148,7 +196,7 @@ export const EG20Viewer = ({ icons = {} }) => {
       </div>
       {tabs.map((tab) => <div key={tab.id} className="pacom-device-panel" role="tabpanel" id={"eg20-panel-" + tab.id} aria-labelledby={"eg20-tab-" + tab.id} hidden={active !== tab.id} tabIndex={0}>
         {tab.id === "overview" && <div className="pacom-datasheet">
-          <div className="pacom-technical-stack">{figure(views.rear, true)}{figure(views.front, true)}{figure(views.side, true)}</div>
+          <div className="pacom-technical-stack">{drawings.map(view => figure(view, true, "pacom-drawing-sheet"))}</div>
           <div className="pacom-specifications">{groups.map((group) => <details open className="pacom-spec-group" key={group.name}>
             <summary className="pacom-spec-heading">{icons.chevron}<span>{group.name}</span></summary>
             <dl className="pacom-spec-rows">{group.rows.map(([label, value]) => <div className="pacom-spec-row" key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
@@ -163,7 +211,7 @@ export const EG20Viewer = ({ icons = {} }) => {
         {tab.id === "accessories" && <div>{figure(views.accessories, false, "pacom-accessories-image")}<p className="pacom-device-note">图中展示网关、电源适配器、安装支架、螺钉与快速入门指南。实际随箱物品以所购版本的包装清单为准。</p></div>}
       </div>)}
       <dialog ref={dialogRef} className="pacom-photo-dialog" aria-label={zoomed ? zoomed.view.name + "大图" : "产品大图"} onCancel={() => setZoomed(null)} onClose={() => setZoomed(null)}>
-        {zoomed && <div className="pacom-photo-dialog-content"><div className="pacom-photo-dialog-header"><span>{zoomed.view.name}</span><button type="button" autoFocus onClick={() => setZoomed(null)} aria-label="关闭大图">{icons.close}</button></div><div className="pacom-photo-dialog-image">{renderPhoto(zoomed.view, zoomed.annotated)}</div><div className="pacom-photo-dialog-footer"><a href={base + zoomed.view.file} download>下载原图</a></div></div>}
+        {zoomed && <div className="pacom-photo-dialog-content"><div className="pacom-photo-dialog-header"><span>{zoomed.view.name}</span><button type="button" autoFocus onClick={() => setZoomed(null)} aria-label="关闭大图">{icons.close}</button></div><div className="pacom-photo-dialog-image">{renderPhoto(zoomed.view, zoomed.annotated)}</div><div className="pacom-photo-dialog-footer">{(zoomed.view.downloads || [zoomed.view]).map(item => <a key={item.file} href={base + item.file} download>{zoomed.view.downloads ? "下载" + item.name + "原图" : "下载原图"}</a>)}</div></div>}
       </dialog>
     </div>
   );

@@ -228,17 +228,17 @@ img.nav-logo {
   margin: 16px auto 0 !important;
   padding: 0 !important;
   overflow-x: auto;
-  border: 1px solid var(--pacom-rule);
+  border: 0;
   border-radius: 4px;
   scrollbar-width: thin;
 }
 .pacom-device-tab {
   flex: 0 0 auto;
-  min-height: 45px;
+  min-height: 47px;
   padding: 14px 20px;
   margin: 0;
-  border: 0;
-  border-right: 1px solid var(--pacom-rule);
+  border: 1px solid var(--pacom-rule);
+  border-right: 0;
   border-radius: 0;
   color: var(--pacom-muted);
   background: transparent;
@@ -250,8 +250,9 @@ img.nav-logo {
   white-space: nowrap;
   cursor: pointer;
 }
-.pacom-device-tab:last-child { border-right: 0; }
-.pacom-device-tab[aria-selected="true"] { color: #202a44; background: #00aeef; }
+.pacom-device-tab:first-child { border-radius: 4px 0 0 4px; }
+.pacom-device-tab:last-child { border-right: 1px solid var(--pacom-rule); border-radius: 0 4px 4px 0; }
+.pacom-device-tab[aria-selected="true"] { color: #202a44; background: #00aeef; border-color: transparent; }
 .pacom-device-tab:not([aria-selected="true"]):hover { background: var(--pacom-hover); }
 .pacom-device-panel { margin-top: 33px; }
 .pacom-device-panel[hidden] { display: none !important; }

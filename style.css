@@ -181,34 +181,8 @@ img.nav-logo {
   padding-bottom: 48px;
 }
 .pacom-device-header {
-  display: flex;
-  align-items: center;
-  gap: 21px;
-  min-height: 86px;
-  margin: 0 !important;
-}
-.pacom-device-thumbnail {
-  display: flex;
-  flex: 0 0 86px;
-  align-items: center;
-  justify-content: center;
-  width: 86px;
-  height: 86px;
-  padding: 12px;
-  overflow: hidden;
-  border-radius: 8px;
-  background: #f8f8f8;
-}
-.pacom-device-thumbnail img {
   display: block;
-  width: 62px !important;
-  height: 62px !important;
-  max-width: none !important;
-  object-fit: contain;
-  transform: scale(.8849557522);
   margin: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
 }
 .pacom-device-header h1 {
   color: var(--pacom-heading) !important;
@@ -231,10 +205,10 @@ img.nav-logo {
 .pacom-device-tabs {
   display: flex;
   align-items: stretch;
-  justify-content: center;
+  justify-content: flex-start;
   width: fit-content;
   max-width: 100%;
-  margin: 16px auto 0 !important;
+  margin: 16px 0 0 !important;
   padding: 0 !important;
   overflow-x: auto;
   border: 0;
@@ -271,7 +245,7 @@ img.nav-logo {
   align-items: start;
 }
 .pacom-technical-stack { display: flex; flex: 1 1 0%; flex-direction: column; gap: 16px; min-width: 0; max-width: 497px; }
-.pacom-technical-stack > .pacom-technical-view { width: calc(100% - 41px); max-width: 456px; margin-right: 41px !important; }
+.pacom-technical-stack > .pacom-technical-view { width: calc(100% - 41px); max-width: 456px; margin-left: 41px !important; margin-right: 0 !important; }
 .pacom-drawing-sheet .pacom-photo-button { padding: 28px 25px 34px 19px; border-radius: 0; }
 .pacom-drawing-canvas { position: relative; display: block; width: 100%; overflow: hidden; container-type: inline-size; }
 .pacom-drawing-canvas img { position: absolute !important; display: block; height: auto !important; max-width: none !important; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; }
@@ -474,7 +448,7 @@ img.nav-logo {
 @container pacom-device (max-width: 767px) {
   .pacom-datasheet { flex-direction: column; row-gap: 28px; }
   .pacom-technical-stack { max-width: 456px; margin: 0 auto; width: 100%; }
-  .pacom-technical-stack > .pacom-technical-view { width: 100%; margin-right: 0 !important; }
+  .pacom-technical-stack > .pacom-technical-view { width: 100%; margin-left: 0 !important; margin-right: 0 !important; }
   .pacom-drawing-sheet .pacom-photo-button { padding: 0; }
   .pacom-specifications { width: 100%; }
   .pacom-spec-row { column-gap: 48px; }
@@ -483,7 +457,6 @@ img.nav-logo {
 @container pacom-device (max-width: 600px) {
   .pacom-device-header h1 { font-size: 22px !important; line-height: 28px !important; letter-spacing: -0.44px !important; }
   .pacom-device-header p { font-size: 18px; }
-  .pacom-device-tabs { justify-content: flex-start; margin-left: 0 !important; }
   .pacom-device-panel { margin-top: 33px; }
   .pacom-device-panel:has(.pacom-datasheet) { margin-top: 33px; }
   .pacom-spec-row { column-gap: 16px; }
@@ -498,7 +471,6 @@ img.nav-logo {
 }
 @media (max-width: 480px) {
   .pacom-eg20-page { padding-bottom: 28px; }
-  .pacom-device-header { gap: 21px; }
   .pacom-technical-stack { gap: 4px; }
   .pacom-drawing-sheet .pacom-photo-button { padding: 0; }
   .pacom-annotation { font-size: 12px; }

@@ -54,88 +54,344 @@ img.nav-logo {
   top: -18.947906%;
 }
 
-/* Product views: unchanged source pixels, with a separate annotation layer. */
-.pacom-eg20-page { --pacom-ink: #202a44; --pacom-muted: #667085; --pacom-rule: #e6e8ed; }
-.pacom-product-tabs[role="tablist"] {
-  gap: 0 !important; border: 1px solid var(--pacom-rule); border-radius: 6px;
-  overflow-x: auto; width: fit-content; min-width: 0 !important; max-width: 100%; padding: 0 !important;
+/* EG20 device page: measured UniFi spacing with PACOM brand accents. */
+.pacom-eg20-page {
+  --pacom-ink: #202a44;
+  --pacom-text: #50565e;
+  --pacom-heading: #52535a;
+  --pacom-muted: #6b6d76;
+  --pacom-rule: #ededf0;
+  --pacom-divider: #dbdce1;
+  --pacom-hover: #f9f9fa;
+  container-name: pacom-device;
+  container-type: inline-size;
+  color: var(--pacom-text);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  padding-bottom: 48px;
 }
-.pacom-product-tabs [role="tab"] {
-  border: 0 !important; border-right: 1px solid var(--pacom-rule) !important;
-  padding: 12px 24px !important; margin: 0 !important; white-space: nowrap;
-  color: var(--pacom-muted) !important; background: transparent; font-size: 14px !important;
+.pacom-device-header {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+  min-height: 86px;
+  margin: 0 !important;
 }
-.pacom-product-tabs [role="tab"]:last-child { border-right: 0 !important; }
-.pacom-product-tabs [data-component-part="tab-button"] {
-  color: inherit !important; padding: 0 !important; margin: 0 !important;
-  border: 0 !important; font-weight: 500; line-height: 1.5;
+.pacom-device-thumbnail {
+  display: flex;
+  flex: 0 0 86px;
+  align-items: center;
+  justify-content: center;
+  width: 86px;
+  height: 86px;
+  padding: 12px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f8f8f8;
 }
-.pacom-product-tabs [role="tab"][aria-selected="true"] { color: #fff !important; background: var(--pacom-ink); }
-.pacom-product-viewer { margin: 24px 0; }
-.pacom-technical-view { margin: 0 !important; min-width: 0; }
-.pacom-technical-view figcaption, .pacom-gallery-status {
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  margin: 0 0 16px !important; font-size: 14px; font-weight: 500; font-style: normal;
-  color: inherit;
+.pacom-device-thumbnail img {
+  display: block;
+  width: 62px !important;
+  height: 62px !important;
+  max-width: none !important;
+  object-fit: contain;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
 }
-.pacom-technical-view figcaption button, .pacom-gallery-actions button, .pacom-gallery-actions a,
-.pacom-photo-dialog-header button, .pacom-photo-dialog-footer a {
-  font: inherit; font-size: 12px; font-weight: 400; color: var(--pacom-muted, #667085);
-  cursor: pointer; text-decoration: none; border: 0; background: transparent; padding: 4px 0;
+.pacom-device-header h1 {
+  color: var(--pacom-heading) !important;
+  font-size: 36px !important;
+  font-family: inherit !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.72px !important;
+  line-height: 44px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
 }
-.pacom-technical-view figcaption button:hover, .pacom-gallery-actions button:hover,
-.pacom-gallery-actions a:hover, .pacom-photo-dialog-header button:hover, .pacom-photo-dialog-footer a:hover { color: #202a44; text-decoration: underline; }
-.pacom-photo-button { display: block; width: 100%; border: 0; padding: 0; margin: 0; background: #fff; cursor: zoom-in; border-radius: 3px; overflow: hidden; }
+.pacom-device-header p {
+  color: #9a9a9a;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0 !important;
+}
+.pacom-device-tabs {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  margin: 16px auto 0 !important;
+  padding: 0 !important;
+  overflow-x: auto;
+  border: 1px solid var(--pacom-rule);
+  border-radius: 4px;
+  scrollbar-width: thin;
+}
+.pacom-device-tab {
+  flex: 0 0 auto;
+  min-height: 45px;
+  padding: 14px 20px;
+  margin: 0;
+  border: 0;
+  border-right: 1px solid var(--pacom-rule);
+  border-radius: 0;
+  color: var(--pacom-muted);
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.28px;
+  line-height: 17px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.pacom-device-tab:last-child { border-right: 0; }
+.pacom-device-tab[aria-selected="true"] { color: #fff; background: var(--pacom-ink); }
+.pacom-device-tab:not([aria-selected="true"]):hover { background: var(--pacom-hover); }
+.pacom-device-panel { margin-top: 33px; }
+.pacom-device-panel[hidden] { display: none !important; }
+.pacom-device-panel:has(.pacom-datasheet) { margin-top: 50px; }
+.pacom-datasheet {
+  display: grid;
+  grid-template-columns: minmax(0, 456px) minmax(0, 1fr);
+  align-items: start;
+  column-gap: 41px;
+}
+.pacom-technical-stack { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.pacom-technical-view { position: relative; min-width: 0; margin: 0 !important; }
+.pacom-technical-view figcaption { margin: 0 !important; font: inherit; font-style: normal; color: var(--pacom-muted); }
+.pacom-photo-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 8px;
+  background: #fff;
+  cursor: zoom-in;
+}
 .pacom-photo-canvas { position: relative; display: block; width: 100%; overflow: hidden; background: #fff; }
 .pacom-photo-canvas img {
-  display: block; position: absolute !important; max-width: none !important; height: auto !important;
-  margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important;
+  display: block;
+  position: absolute !important;
+  max-width: none !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
 }
-.pacom-annotation { position: static; color: #50555f; font-family: inherit; font-size: 12px; font-weight: 400; line-height: 1.4; }
+.pacom-annotation { position: static; color: #50565e; font-family: inherit; font-size: 12px; font-weight: 400; line-height: 1.4; }
 .pacom-leader-vertical, .pacom-leader-horizontal { position: absolute; pointer-events: none; border-color: #8e939d; border-style: solid; border-width: 0; }
 .pacom-leader-vertical { width: 0; border-left-width: 1px; }
 .pacom-leader-horizontal { height: 0; border-top-width: 1px; }
 .pacom-leader-dot { position: absolute; width: 3px; height: 3px; transform: translate(-50%, -50%); background: #777d87; border-radius: 50%; pointer-events: none; }
-.pacom-leader-label { position: absolute; transform: translate(-50%, -50%); background: #fff; padding: 3px 6px; white-space: nowrap; pointer-events: none; }
-.pacom-leader-label-side { font-size: 12px; }
-.pacom-technical-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 36px; }
-.pacom-mobile-labels { display: none; }
-.pacom-gallery { max-width: 800px; margin: 0 auto; }
-.pacom-gallery-status span:last-child { color: var(--pacom-muted); font-size: 12px; font-weight: 400; }
-.pacom-gallery-main { border-bottom: 1px solid var(--pacom-rule); }
-.pacom-gallery-actions { display: flex; justify-content: flex-end; gap: 24px; padding: 10px 0 18px; }
-.pacom-gallery-thumbnails { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
-.pacom-gallery-thumbnails button {
-  min-width: 0; border: 1px solid var(--pacom-rule); background: #fff; border-radius: 5px; padding: 5px;
-  color: #667085; cursor: pointer; overflow: hidden;
+.pacom-leader-label { position: absolute; transform: translate(-50%, -50%); background: #fff; padding: 3px 5px; white-space: nowrap; pointer-events: none; }
+.pacom-image-actions {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
 }
-.pacom-gallery-thumbnails button[aria-pressed="true"] { border-color: #202a44; box-shadow: inset 0 0 0 1px #202a44; color: #202a44; }
-.pacom-thumbnail-label { display: block; font-size: 10px; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 3px 0; }
-.pacom-viewer-mounting { max-width: 700px; margin-left: auto; margin-right: auto; }
-.pacom-viewer-accessories { max-width: 900px; margin-left: auto; margin-right: auto; }
-.pacom-photo-dialog { --pacom-muted: #667085; color: #202a44; background: #fff; border: 0; border-radius: 8px; padding: 0; width: min(1120px, calc(100vw - 48px)); max-width: none; max-height: calc(100dvh - 48px); margin: auto; overflow: auto; box-shadow: 0 12px 60px rgba(0,0,0,.18); }
-.pacom-photo-dialog::backdrop { background: rgba(17,24,39,.62); }
-.pacom-photo-dialog-header { position: sticky; top: 0; z-index: 2; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; font-size: 15px; font-weight: 500; border-bottom: 1px solid #e6e8ed; }
-.pacom-photo-dialog-header button { font-size: 14px; padding: 8px; }
-.pacom-photo-dialog-image { padding: 24px; }
-.pacom-photo-dialog-footer { display: flex; justify-content: flex-end; padding: 0 24px 20px; }
-.pacom-photo-dialog .pacom-annotation { font-size: 14px; }
-.pacom-photo-button:focus-visible, .pacom-product-viewer button:focus-visible, .pacom-product-viewer a:focus-visible, .pacom-photo-dialog button:focus-visible, .pacom-photo-dialog a:focus-visible { outline: 2px solid #202a44; outline-offset: 3px; }
-.dark .pacom-eg20-page { --pacom-muted: #a8afbd; --pacom-rule: #353a45; }
-.dark .pacom-product-tabs [role="tab"][aria-selected="true"] { background: #dce3f5; color: #202a44 !important; }
-.dark .pacom-technical-view figcaption button:hover, .dark .pacom-gallery-actions a:hover, .dark .pacom-gallery-actions button:hover { color: #dce3f5; }
-@media (max-width: 640px) {
-  .pacom-product-tabs [role="tab"] { padding: 10px 12px !important; font-size: 13px !important; }
-  .pacom-technical-pair { grid-template-columns: 1fr; gap: 28px; margin-top: 28px; }
-  .pacom-annotation { font-size: 9px; }
-  .pacom-technical-view .pacom-annotation { display: none; }
-  .pacom-mobile-labels { display: flex; flex-wrap: wrap; gap: 6px 18px; list-style: none !important; padding: 10px 0 0 !important; margin: 0 !important; color: #667085; font-size: 12px; line-height: 1.7; }
-  .pacom-mobile-labels li { padding: 0 !important; margin: 0 !important; }
-  .dark .pacom-mobile-labels { color: #a8afbd; }
-  .pacom-gallery-thumbnails { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .pacom-photo-dialog { width: calc(100vw - 20px); max-height: calc(100dvh - 20px); }
-  .pacom-photo-dialog-image { padding: 16px 10px; overflow-x: auto; }
-  .pacom-photo-dialog .pacom-photo-canvas { min-width: 760px; }
+.pacom-technical-view:hover > .pacom-image-actions,
+.pacom-technical-view:focus-within > .pacom-image-actions,
+.pacom-gallery-item:hover > .pacom-image-actions,
+.pacom-gallery-item:focus-within > .pacom-image-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+.pacom-image-actions button, .pacom-image-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 50px;
+  padding: 15px;
+  margin: 0;
+  border: 0;
+  border-radius: 8px;
+  color: #fff !important;
+  background: var(--pacom-ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+.pacom-image-actions a { background: #212427; }
+.pacom-image-actions svg { flex: 0 0 18px; width: 18px; height: 18px; }
+.pacom-eg20-page svg.icon, .pacom-photo-dialog svg.icon { background-color: currentColor !important; }
+.pacom-image-actions button:hover, .pacom-image-actions a:hover { filter: brightness(1.12); }
+.pacom-specifications { min-width: 0; margin-bottom: 20px; }
+.pacom-spec-group {
+  margin: 0 !important;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--pacom-divider);
+  border-radius: 0;
+  background: transparent;
+}
+.pacom-spec-group:last-child { border-bottom: 0; padding-bottom: 0; }
+.pacom-spec-heading {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 37px;
+  padding: 10px 0;
+  margin: 0 !important;
+  color: #212327;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17px;
+  list-style: none;
+  cursor: pointer;
+}
+.pacom-spec-heading::-webkit-details-marker { display: none; }
+.pacom-spec-heading svg { flex: 0 0 16px; width: 16px; height: 16px; transition: transform 150ms ease; }
+.pacom-spec-group[open] > .pacom-spec-heading svg { transform: rotate(180deg); }
+.pacom-spec-rows { margin: 0 !important; padding: 0; }
+.pacom-spec-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.6275fr) minmax(0, 1fr);
+  align-items: center;
+  column-gap: 48px;
+  padding: 8px 0;
+  color: var(--pacom-text);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+.pacom-spec-row:hover { background: var(--pacom-hover); }
+.pacom-spec-row dt, .pacom-spec-row dd { min-width: 0; padding: 0; margin: 0; font: inherit; overflow-wrap: anywhere; }
+.pacom-spec-row dt { max-width: 251px; }
+.pacom-spec-row dd { color: inherit; }
+.pacom-spec-row.pacom-spec-row-nested dt { position: relative; padding-left: 25px; }
+.pacom-spec-row.pacom-spec-row-nested dt::before { content: ""; position: absolute; top: 10px; left: 10px; width: 10px; height: 1px; background: #c5c5c5; }
+.pacom-gallery-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.pacom-gallery-item { position: relative; min-width: 0; margin: 0 !important; overflow: hidden; border-radius: 8px; background: #f8f8f8; }
+.pacom-gallery-item .pacom-photo-button, .pacom-gallery-item .pacom-photo-canvas { background: #f8f8f8; }
+.pacom-gallery-item .pacom-photo-canvas { aspect-ratio: 1; }
+.pacom-mounting-image { max-width: 700px; margin-left: auto !important; margin-right: auto !important; }
+.pacom-accessories-image { max-width: 960px; padding: 16px; margin-left: auto !important; margin-right: auto !important; }
+.pacom-device-note { margin: 20px 0 0 !important; color: var(--pacom-muted); font-size: 13px; line-height: 20px; }
+.pacom-mobile-labels { display: none; }
+.pacom-photo-dialog {
+  position: fixed;
+  inset: 0;
+  color: #50565e;
+  background: #f8f8f8;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  overflow: hidden;
+  box-shadow: none;
+}
+.pacom-photo-dialog::backdrop { background: #f8f8f8; }
+.pacom-photo-dialog-content { display: flex; flex-direction: column; height: 100%; }
+.pacom-photo-dialog-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 auto;
+  min-height: 64px;
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 400;
+}
+.pacom-photo-dialog-header button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  color: #50565e;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+.pacom-photo-dialog-header button svg { width: 18px; height: 18px; }
+.pacom-photo-dialog-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  min-height: 0;
+  padding: 0 16px;
+  overflow: auto;
+}
+.pacom-photo-dialog-image .pacom-photo-canvas { width: min(100%, calc((100dvh - 112px) * var(--pacom-photo-ratio, 1.6))); max-width: 1400px; flex-shrink: 0; background: transparent; }
+.pacom-photo-dialog-footer { display: flex; justify-content: flex-end; flex: 0 0 auto; min-height: 48px; padding: 12px 16px; }
+.pacom-photo-dialog-footer a { color: #50565e !important; font-size: 14px; text-decoration: none !important; }
+.pacom-photo-dialog-footer a:hover { text-decoration: underline !important; }
+.pacom-eg20-page button:focus-visible, .pacom-eg20-page a:focus-visible,
+.pacom-eg20-page summary:focus-visible, .pacom-photo-dialog button:focus-visible,
+.pacom-photo-dialog a:focus-visible { outline: 2px solid #202a44; outline-offset: 3px; }
+.dark .pacom-eg20-page { --pacom-text: #c9cbd0; --pacom-heading: #d5d6da; --pacom-muted: #a8aab2; --pacom-rule: #383b42; --pacom-divider: #42464f; --pacom-hover: #24262c; }
+.dark .pacom-spec-heading { color: #e8e9ec; }
+.dark .pacom-device-tab[aria-selected="true"] { color: #202a44; background: #dce3f5; }
+@container pacom-device (max-width: 1000px) {
+  .pacom-spec-row { column-gap: 32px; }
+}
+@container pacom-device (max-width: 840px) {
+  .pacom-datasheet { grid-template-columns: minmax(0, 1fr); row-gap: 28px; }
+  .pacom-technical-stack { max-width: 560px; margin: 0 auto; width: 100%; }
+  .pacom-spec-row { column-gap: 48px; }
+}
+@container pacom-device (max-width: 600px) {
+  .pacom-device-header h1 { font-size: 22px !important; line-height: 28px !important; letter-spacing: -0.44px !important; }
+  .pacom-device-header p { font-size: 18px; }
+  .pacom-device-tabs { justify-content: flex-start; margin-left: 0 !important; }
+  .pacom-device-tab { min-height: 33px; padding: 8px 12px; }
+  .pacom-device-panel { margin-top: 33px; }
+  .pacom-device-panel:has(.pacom-datasheet) { margin-top: 33px; }
+  .pacom-spec-row { column-gap: 16px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .pacom-spec-row dt { max-width: 172px; }
+  .pacom-gallery-grid { gap: 16px; }
+  .pacom-image-actions button, .pacom-image-actions a { min-height: 40px; padding: 10px; }
+  .pacom-image-actions .pacom-action-label { display: none; }
+}
+@media (max-width: 1104px) {
+  .pacom-device-header h1 { font-size: 22px !important; line-height: 28px !important; letter-spacing: -0.44px !important; }
+  .pacom-device-header p { font-size: 18px; }
+}
+@media (max-width: 480px) {
+  .pacom-eg20-page { padding-bottom: 28px; }
+  .pacom-device-header { gap: 21px; }
+  .pacom-technical-stack { gap: 4px; }
+  .pacom-annotation { font-size: 10px; }
+  .pacom-leader-label { padding: 2px 3px; }
+  .pacom-technical-view > .pacom-image-actions { position: static; justify-content: flex-end; margin-top: 8px; opacity: 1; pointer-events: auto; }
+  .pacom-photo-dialog-image { align-items: flex-start; padding-top: 16px; }
+  .pacom-photo-dialog-image:has(.pacom-annotation) { justify-content: flex-start; }
+  .pacom-photo-dialog-image .pacom-photo-canvas:has(.pacom-annotation) { min-width: 760px; }
   .pacom-photo-dialog .pacom-annotation { font-size: 12px; }
-  .pacom-photo-dialog-header { padding: 12px 16px; }
+  .pacom-photo-dialog-header { min-height: 56px; }
+}
+@media (hover: none) {
+  .pacom-image-actions { opacity: 1; pointer-events: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pacom-image-actions, .pacom-spec-heading svg { transition: none; }
 }

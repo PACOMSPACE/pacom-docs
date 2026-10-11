@@ -188,19 +188,19 @@ export const EG20Viewer = ({ icons = {} }) => {
   return (
     <div className="pacom-product-viewer">
       <header className="pacom-device-header">
-        <span className="pacom-device-thumbnail"><img src={base + "eg20-overview.png"} alt="PACOM EG20 边缘网关" width="62" height="62" /></span>
-        <div><h1>PACOM 边缘网关</h1><p>EG20</p></div>
+        <h1>PACOM 边缘网关</h1>
+        <p>EG20</p>
       </header>
       <div className="pacom-device-tabs" role="tablist" aria-label="EG20 产品资料">
         {tabs.map((tab, index) => <button key={tab.id} ref={(node) => { tabRefs.current[index] = node; }} type="button" className="pacom-device-tab" role="tab" id={"eg20-tab-" + tab.id} aria-controls={"eg20-panel-" + tab.id} aria-selected={active === tab.id} tabIndex={active === tab.id ? 0 : -1} onClick={() => setActive(tab.id)} onKeyDown={(event) => moveTab(event, index)}>{tab.name}</button>)}
       </div>
       {tabs.map((tab) => <div key={tab.id} className="pacom-device-panel" role="tabpanel" id={"eg20-panel-" + tab.id} aria-labelledby={"eg20-tab-" + tab.id} hidden={active !== tab.id} tabIndex={0}>
         {tab.id === "overview" && <div className="pacom-datasheet">
-          <div className="pacom-technical-stack">{drawings.map(view => figure(view, true, "pacom-drawing-sheet"))}</div>
           <div className="pacom-specifications">{groups.map((group) => <details open className="pacom-spec-group" key={group.name}>
             <summary className="pacom-spec-heading">{icons.chevron}<span>{group.name}</span></summary>
             <dl className="pacom-spec-rows">{group.rows.map(([label, value]) => <div className="pacom-spec-row" key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
           </details>)}</div>
+          <div className="pacom-technical-stack">{drawings.map(view => figure(view, true, "pacom-drawing-sheet"))}</div>
         </div>}
         {tab.id === "gallery" && <div className="pacom-gallery-grid">{gallery.map((view) => <figure className="pacom-gallery-item" key={view.file}>
           <figcaption className="sr-only">{view.name}</figcaption>

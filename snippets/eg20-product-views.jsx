@@ -67,12 +67,12 @@ export const EG20Viewer = ({ icons = {} }) => {
       images: [sheetImage(views.rear, 1499.5, 100), sheetImage(views.front, 1500.5, 314)],
       downloads: [views.rear, views.front],
       labels: [
-        { text: "USB-C 接口", anchors: [[199.27, 99.18]], label: [170, 38], line: 60 },
+        { text: "USB-C 接口", anchors: [[199.27, 99.18]], label: [100, 38], line: 60 },
         { text: "存储卡槽", anchors: [[244.86, 87.44]], label: [250, 38], line: 60 },
-        { text: "12V 电源接口", anchors: [[401.01, 99.18]], label: [389, 38], line: 60 },
-        { text: "以太网接口", anchors: [[441, 103.28]], label: [477, 38], line: 60 },
-        { text: "音频接口", anchors: [[245.13, 100]], label: [200, 175], line: 148 },
-        { text: "HDMI 接口", anchors: [[292.77, 103.28], [352.55, 103.28]], label: [323, 175], line: 148 },
+        { text: "12V 电源", anchors: [[401.01, 99.18]], label: [405, 38], line: 60 },
+        { text: "以太网接口", anchors: [[441, 103.28]], label: [550, 38], line: 60 },
+        { text: "音频接口", anchors: [[245.13, 100]], label: [190, 175], line: 148 },
+        { text: "HDMI 接口", anchors: [[292.77, 103.28], [352.55, 103.28]], label: [335, 175], line: 148 },
         { text: "电源按键", anchors: [[432.81, 321.23]], label: [433, 254], line: 278 },
       ],
     },
@@ -125,7 +125,7 @@ export const EG20Viewer = ({ icons = {} }) => {
               ))}
               {(xs.length > 1 || item.horizontal || xs[0] !== lx) && <span className="pacom-leader-horizontal" style={{ left: Math.min(...xs, lx) + "%", top: lineY + "%", width: (Math.max(...xs, lx) - Math.min(...xs, lx)) + "%" }} />}
               {!item.horizontal && <span className="pacom-leader-vertical" style={{ left: lx + "%", top: Math.min(ly, lineY) + "%", height: Math.abs(ly - lineY) + "%" }} />}
-              <span className={"pacom-leader-label" + (item.horizontal ? " pacom-leader-label-side" : "")} style={{ left: lx + "%", top: ly + "%" }}>{item.text}</span>
+              <span className={"pacom-leader-label" + (item.horizontal ? " pacom-leader-label-side" : "")} style={{ left: item.horizontal ? "clamp(32px, " + lx + "%, calc(100% - 32px))" : lx + "%", top: ly + "%" }}>{item.text}</span>
             </span>
           );
         })}

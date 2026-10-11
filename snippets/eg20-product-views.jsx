@@ -1,6 +1,7 @@
 // Annotations are separate from the unchanged source photographs.
-export const EG20Viewer = ({ section = "overview" }) => {
-  const [selected, setSelected] = useState(0);
+export const EG20Viewer = ({ icons = {} }) => {
+  const [active, setActive] = useState("overview");
+  const tabRefs = useRef([]);
   const [zoomed, setZoomed] = useState(null);
   const dialogRef = useRef(null);
 
@@ -18,10 +19,10 @@ export const EG20Viewer = ({ section = "overview" }) => {
       name: "背面接口", file: "eg20-rear-ports.png", crop: [120, 1080, 2760, 840],
       alt: "EG20 背面正视图，标出 USB-C、存储卡槽、音频、两处 HDMI、12V 电源与以太网接口的位置",
       labels: [
-        { text: "USB-C 接口", anchors: [[615, 1494]], label: [615, 1130], line: 1215 },
+        { text: "USB-C 接口", anchors: [[615, 1494]], label: [460, 1130], line: 1215 },
         { text: "存储卡槽", anchors: [[949, 1408]], label: [949, 1130], line: 1215 },
-        { text: "12V 电源接口", anchors: [[2093, 1494]], label: [2093, 1130], line: 1215 },
-        { text: "以太网接口", anchors: [[2386, 1524]], label: [2440, 1130], line: 1215 },
+        { text: "12V 电源接口", anchors: [[2093, 1494]], label: [1990, 1130], line: 1215 },
+        { text: "以太网接口", anchors: [[2386, 1524]], label: [2590, 1130], line: 1215 },
         { text: "音频接口", anchors: [[951, 1500]], label: [951, 1830], line: 1780 },
         { text: "HDMI 接口", anchors: [[1300, 1524], [1738, 1524]], label: [1519, 1830], line: 1780 },
       ],
@@ -54,12 +55,12 @@ export const EG20Viewer = ({ section = "overview" }) => {
   const gallery = [views.hero, views.left, views.rearAngle, views.front, views.rear, views.side, views.top];
 
   const renderPhoto = (view, annotated = false, galleryFrame = false) => {
-    const crop = galleryFrame ? [60, 580, 2880, 1840] : view.crop;
+    const crop = galleryFrame ? [0, 0, 3000, 3000] : view.crop;
     const [x, y, w, h] = crop || [0, 0, 3840, 2160];
     const px = (value) => (value - x) / w * 100;
     const py = (value) => (value - y) / h * 100;
     return (
-      <span className="pacom-photo-canvas" style={{ aspectRatio: w + " / " + h }}>
+      <span className="pacom-photo-canvas" style={{ aspectRatio: w + " / " + h, "--pacom-photo-ratio": w / h }}>
         <img src={base + view.file} alt={view.alt} width={view.dimensions ? 3840 : 3000} height={view.dimensions ? 2160 : 3000} loading="lazy" draggable="false" style={{ width: (crop ? 3000 / w * 100 : 100) + "%", left: -x / w * 100 + "%", top: -y / h * 100 + "%" }} />
         {annotated && (view.labels || []).map((item, i) => {
           const xs = item.anchors.map((point) => px(point[0]));
@@ -84,27 +85,85 @@ export const EG20Viewer = ({ section = "overview" }) => {
     );
   };
 
-  const figure = (view, annotated = false) => (
-    <figure key={view.file} className="pacom-technical-view">
-      <figcaption><span>{view.name}</span><button type="button" onClick={() => setZoomed({ view, annotated })} aria-label={"放大" + view.name}>放大查看</button></figcaption>
+  const actions = (view, annotated = false) => (
+    <div className="pacom-image-actions">
+      <a href={base + view.file} download aria-label={"下载" + view.name}>{icons.download}<span className="pacom-action-label">下载</span></a>
+      <button type="button" onClick={() => setZoomed({ view, annotated })} aria-label={"放大" + view.name}>{icons.zoom}<span className="pacom-action-label">放大</span></button>
+    </div>
+  );
+  const figure = (view, annotated = false, className = "") => (
+    <figure key={view.file} className={"pacom-technical-view " + className}>
+      <figcaption className="sr-only">{view.name}</figcaption>
       <button type="button" className="pacom-photo-button" onClick={() => setZoomed({ view, annotated })} aria-label={"查看" + view.name + "大图"}>{renderPhoto(view, annotated)}</button>
-      {annotated && view.labels && <ul className="pacom-mobile-labels">{view.labels.filter((item, i, all) => all.findIndex((other) => other.text === item.text) === i).map((item) => <li key={item.text}>{item.text}</li>)}</ul>}
+      {actions(view, annotated)}
     </figure>
   );
+  const groups = [
+    { name: "产品概览", rows: [
+      ["产品名称", "PACOM 边缘网关"],
+      ["型号", "EG20"],
+      ["电源按键", "前面"],
+      ["连接接口", "背面与侧面"],
+    ] },
+    { name: "接口布局", rows: [
+      ["USB-C 接口", "背面 · 1 个"],
+      ["USB-A 接口", "侧面 · 3 个"],
+      ["HDMI 接口", "背面 · 2 个"],
+      ["以太网接口", "背面 · 1 个"],
+      ["音频接口", "背面 · 1 个"],
+      ["存储卡槽", "背面 · 1 个"],
+      ["电源接口", "背面 · 标有 12V"],
+    ] },
+    { name: "安装与附件", rows: [
+      ["安装支架", "底部支架与安装挂孔"],
+      ["附件示意", "电源适配器、安装支架、螺钉、快速入门指南"],
+    ] },
+  ];
+  const tabs = [
+    { id: "overview", name: "产品概览" },
+    { id: "gallery", name: "产品图片" },
+    { id: "mounting", name: "安装支架" },
+    { id: "accessories", name: "附件示意" },
+  ];
+  const moveTab = (event, index) => {
+    let next;
+    if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+    if (event.key === "ArrowLeft") next = (index + tabs.length - 1) % tabs.length;
+    if (event.key === "Home") next = 0;
+    if (event.key === "End") next = tabs.length - 1;
+    if (next === undefined) return;
+    event.preventDefault();
+    setActive(tabs[next].id);
+    tabRefs.current[next]?.focus();
+  };
 
   return (
-    <div className={"pacom-product-viewer pacom-viewer-" + section}>
-      {section === "overview" && <div className="pacom-technical-stack">{figure(views.rear, true)}<div className="pacom-technical-pair">{figure(views.front, true)}{figure(views.side, true)}</div></div>}
-      {section === "gallery" && <div className="pacom-gallery">
-        <div className="pacom-gallery-status" aria-live="polite"><span>{gallery[selected].name}</span><span>{selected + 1} / {gallery.length}</span></div>
-        <button type="button" className="pacom-photo-button pacom-gallery-main" aria-label={"放大" + gallery[selected].name} onClick={() => setZoomed({ view: gallery[selected], annotated: false })}>{renderPhoto(gallery[selected], false, true)}</button>
-        <div className="pacom-gallery-actions"><button type="button" onClick={() => setZoomed({ view: gallery[selected], annotated: false })}>放大查看</button><a href={base + gallery[selected].file} target="_blank" rel="noopener noreferrer" download>下载图片</a></div>
-        <div className="pacom-gallery-thumbnails" aria-label="选择产品视角">{gallery.map((view, index) => <button type="button" key={view.file} aria-label={"选择" + view.name} aria-pressed={selected === index} onClick={() => setSelected(index)}>{renderPhoto(view, false, true)}<span className="pacom-thumbnail-label">{view.name}</span></button>)}</div>
-      </div>}
-      {section === "mounting" && figure(views.mounting, true)}
-      {section === "accessories" && figure(views.accessories)}
-      <dialog ref={dialogRef} className="pacom-photo-dialog" aria-label={zoomed ? zoomed.view.name + "大图" : "产品大图"} onCancel={() => setZoomed(null)} onClose={() => setZoomed(null)} onClick={(event) => { if (event.target === dialogRef.current) setZoomed(null); }}>
-        {zoomed && <div className="pacom-photo-dialog-content"><div className="pacom-photo-dialog-header"><span>{zoomed.view.name}</span><button type="button" autoFocus onClick={() => setZoomed(null)} aria-label="关闭大图">关闭</button></div><div className="pacom-photo-dialog-image">{renderPhoto(zoomed.view, zoomed.annotated)}</div><div className="pacom-photo-dialog-footer"><a href={base + zoomed.view.file} target="_blank" rel="noopener noreferrer" download>下载图片</a></div></div>}
+    <div className="pacom-product-viewer">
+      <header className="pacom-device-header">
+        <span className="pacom-device-thumbnail"><img src={base + "eg20-overview.png"} alt="PACOM EG20 边缘网关" width="62" height="62" /></span>
+        <div><h1>PACOM 边缘网关</h1><p>EG20</p></div>
+      </header>
+      <div className="pacom-device-tabs" role="tablist" aria-label="EG20 产品资料">
+        {tabs.map((tab, index) => <button key={tab.id} ref={(node) => { tabRefs.current[index] = node; }} type="button" className="pacom-device-tab" role="tab" id={"eg20-tab-" + tab.id} aria-controls={"eg20-panel-" + tab.id} aria-selected={active === tab.id} tabIndex={active === tab.id ? 0 : -1} onClick={() => setActive(tab.id)} onKeyDown={(event) => moveTab(event, index)}>{tab.name}</button>)}
+      </div>
+      {tabs.map((tab) => <div key={tab.id} className="pacom-device-panel" role="tabpanel" id={"eg20-panel-" + tab.id} aria-labelledby={"eg20-tab-" + tab.id} hidden={active !== tab.id} tabIndex={0}>
+        {tab.id === "overview" && <div className="pacom-datasheet">
+          <div className="pacom-technical-stack">{figure(views.rear, true)}{figure(views.front, true)}{figure(views.side, true)}</div>
+          <div className="pacom-specifications">{groups.map((group) => <details open className="pacom-spec-group" key={group.name}>
+            <summary className="pacom-spec-heading">{icons.chevron}<span>{group.name}</span></summary>
+            <dl className="pacom-spec-rows">{group.rows.map(([label, value]) => <div className="pacom-spec-row" key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+          </details>)}</div>
+        </div>}
+        {tab.id === "gallery" && <div className="pacom-gallery-grid">{gallery.map((view) => <figure className="pacom-gallery-item" key={view.file}>
+          <figcaption className="sr-only">{view.name}</figcaption>
+          <button type="button" className="pacom-photo-button" aria-label={"查看" + view.name + "大图"} onClick={() => setZoomed({ view, annotated: false })}>{renderPhoto(view, false, true)}</button>
+          {actions(view)}
+        </figure>)}</div>}
+        {tab.id === "mounting" && <div>{figure(views.mounting, true, "pacom-mounting-image")}<p className="pacom-device-note">支架图用于辨认安装挂孔和固定螺钉的位置。安装尺寸与操作步骤请以对应版本的安装说明为准。</p></div>}
+        {tab.id === "accessories" && <div>{figure(views.accessories, false, "pacom-accessories-image")}<p className="pacom-device-note">图中展示网关、电源适配器、安装支架、螺钉与快速入门指南。实际随箱物品以所购版本的包装清单为准。</p></div>}
+      </div>)}
+      <dialog ref={dialogRef} className="pacom-photo-dialog" aria-label={zoomed ? zoomed.view.name + "大图" : "产品大图"} onCancel={() => setZoomed(null)} onClose={() => setZoomed(null)}>
+        {zoomed && <div className="pacom-photo-dialog-content"><div className="pacom-photo-dialog-header"><span>{zoomed.view.name}</span><button type="button" autoFocus onClick={() => setZoomed(null)} aria-label="关闭大图">{icons.close}</button></div><div className="pacom-photo-dialog-image">{renderPhoto(zoomed.view, zoomed.annotated)}</div><div className="pacom-photo-dialog-footer"><a href={base + zoomed.view.file} download>下载原图</a></div></div>}
       </dialog>
     </div>
   );

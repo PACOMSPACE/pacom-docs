@@ -2,30 +2,11 @@
 title: "PACOM 边缘网关"
 description: "EG20 · 产品外观、接口位置、安装支架与附件"
 sidebarTitle: "边缘网关"
-mode: "wide"
+mode: "frame"
 ---
 
 import { EG20Viewer } from "/snippets/eg20-product-views.jsx";
 
-<div className="pacom-eg20-page">
-  <Tabs sync={false} className="pacom-product-tabs">
-    <Tab title="产品概览">
-      前面设有电源按键，连接接口分布在背面与侧面。点击图片可放大查看接口位置。
-
-      <EG20Viewer section="overview" />
-    </Tab>
-    <Tab title="产品图片">
-      <EG20Viewer section="gallery" />
-    </Tab>
-    <Tab title="安装支架">
-      <EG20Viewer section="mounting" />
-
-      支架图用于辨认安装挂孔和固定螺钉的位置。安装尺寸与操作步骤请以对应版本的安装说明为准。
-    </Tab>
-    <Tab title="附件示意">
-      <EG20Viewer section="accessories" />
-
-      图中展示网关、电源适配器、安装支架、螺钉与快速入门指南。实际随箱物品以所购版本的包装清单为准。
-    </Tab>
-  </Tabs>
+<div className="pacom-eg20-page not-prose">
+  <EG20Viewer icons={{ download: <Icon icon="download" size={16} />, zoom: <Icon icon="magnifying-glass-plus" size={16} />, close: <Icon icon="xmark" size={16} />, chevron: <Icon icon="angle-down" size={16} /> }} />
 </div>

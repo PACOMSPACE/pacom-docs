@@ -147,5 +147,10 @@
   "footer": {
     "socials": {}
   },
-  "description": "PACOM 产品文档与开发者指南。"
+  "description": "PACOM 产品文档与开发者指南。",
+  "fonts": {
+    "family": "Figtree",
+    "source": "/fonts/figtree-latin-variable.woff2",
+    "format": "woff2"
+  }
 }

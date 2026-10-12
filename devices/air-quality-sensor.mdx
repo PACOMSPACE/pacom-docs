@@ -1,23 +1,12 @@
 ---
 title: "PACOM 空气质量传感器"
-description: "整理空气质量传感器的产品、安装、使用和维护资料。"
+description: "AQ20 · 室内空气质量监测、完整技术规格、产品图片与安装使用"
 sidebarTitle: "空气质量传感器"
+mode: "frame"
 ---
 
-本页为文档骨架，待取得对应型号与版本的公开资料后补充。
+import { SensorProductViewer, AQ20Product } from "/snippets/sensor-product-views.jsx";
 
-## 产品概述
-
-准备型号、版本及经确认的检测项目、单位和适用场景。
-
-## 安装接线
-
-待提供安装环境要求、接口定义和接线图。
-
-## 配置使用
-
-待提供初始配置流程、读数解释和验收方法。
-
-## 维护排错
-
-待确认维护或校准要求，补充读数异常的检查步骤及反馈记录。
+<div className="pacom-device-page pacom-sensor-page not-prose">
+  <SensorProductViewer product={AQ20Product} icons={{ download: <Icon icon="download" size={16} />, zoom: <Icon icon="magnifying-glass-plus" size={16} />, close: <Icon icon="xmark" size={16} />, chevron: <Icon icon="angle-down" size={16} /> }} />
+</div>

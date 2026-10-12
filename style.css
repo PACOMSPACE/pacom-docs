@@ -163,8 +163,8 @@ img.nav-logo {
   top: -18.947906%;
 }
 
-/* EG20 device page: measured UniFi spacing with PACOM brand accents. */
-.pacom-eg20-page {
+/* Shared device pages: measured UniFi spacing with PACOM brand accents. */
+:is(.pacom-eg20-page, .pacom-device-page) {
   --pacom-ink: #202a44;
   --pacom-text: #50565e;
   --pacom-heading: #52535a;
@@ -325,7 +325,7 @@ img.nav-logo {
 }
 .pacom-image-actions a { background: #212427; }
 .pacom-image-actions svg { flex: 0 0 18px; width: 18px; height: 18px; }
-.pacom-eg20-page svg.icon, .pacom-photo-dialog svg.icon { background-color: currentColor !important; }
+:is(.pacom-eg20-page, .pacom-device-page) svg.icon, .pacom-photo-dialog svg.icon { background-color: currentColor !important; }
 .pacom-image-actions button:hover, .pacom-image-actions a:hover { filter: brightness(1.12); }
 .pacom-specifications { flex: 1 1 0%; min-width: 0; margin-bottom: 20px; }
 .pacom-spec-group {
@@ -437,14 +437,14 @@ img.nav-logo {
 .pacom-photo-dialog-footer { display: flex; justify-content: flex-end; gap: 20px; flex: 0 0 auto; min-height: 48px; padding: 12px 16px; }
 .pacom-photo-dialog-footer a { color: #50565e !important; font-size: 14px; text-decoration: none !important; }
 .pacom-photo-dialog-footer a:hover { text-decoration: underline !important; }
-.pacom-eg20-page button:focus-visible, .pacom-eg20-page a:focus-visible,
-.pacom-eg20-page summary:focus-visible, .pacom-photo-dialog button:focus-visible,
+:is(.pacom-eg20-page, .pacom-device-page) button:focus-visible, :is(.pacom-eg20-page, .pacom-device-page) a:focus-visible,
+:is(.pacom-eg20-page, .pacom-device-page) summary:focus-visible, .pacom-photo-dialog button:focus-visible,
 .pacom-photo-dialog a:focus-visible { outline: 2px solid #202a44; outline-offset: 3px; }
-.dark .pacom-eg20-page { --pacom-text: #c9cbd0; --pacom-heading: #d5d6da; --pacom-muted: #a8aab2; --pacom-rule: #383b42; --pacom-divider: #42464f; --pacom-hover: #24262c; }
+.dark :is(.pacom-eg20-page, .pacom-device-page) { --pacom-text: #c9cbd0; --pacom-heading: #d5d6da; --pacom-muted: #a8aab2; --pacom-rule: #383b42; --pacom-divider: #42464f; --pacom-hover: #24262c; }
 .dark .pacom-spec-heading { color: #e8e9ec; }
 .dark .pacom-device-tab[aria-selected="true"] { color: #fff; background: #00aeef; }
-.dark .pacom-eg20-page button:focus-visible, .dark .pacom-eg20-page a:focus-visible,
-.dark .pacom-eg20-page summary:focus-visible { outline-color: #00aeef; }
+.dark :is(.pacom-eg20-page, .pacom-device-page) button:focus-visible, .dark :is(.pacom-eg20-page, .pacom-device-page) a:focus-visible,
+.dark :is(.pacom-eg20-page, .pacom-device-page) summary:focus-visible { outline-color: #00aeef; }
 @container pacom-device (max-width: 767px) {
   .pacom-datasheet { flex-direction: column; row-gap: 28px; }
   .pacom-technical-stack { max-width: 456px; margin: 0 auto; width: 100%; }
@@ -470,7 +470,7 @@ img.nav-logo {
   .pacom-device-header p { font-size: 18px; }
 }
 @media (max-width: 480px) {
-  .pacom-eg20-page { padding-bottom: 28px; }
+  :is(.pacom-eg20-page, .pacom-device-page) { padding-bottom: 28px; }
   .pacom-technical-stack { gap: 4px; }
   .pacom-drawing-sheet .pacom-photo-button { padding: 0; }
   .pacom-annotation { font-size: 12px; }
@@ -488,3 +488,16 @@ img.nav-logo {
 @media (prefers-reduced-motion: reduce) {
   .pacom-image-actions, .pacom-spec-heading svg { transition: none; }
 }
+
+/* Sensor views retain original pixels with equal square frames and body scale. */
+.pacom-sensor-page .pacom-photo-canvas,
+.pacom-sensor-page .pacom-gallery-item,
+.pacom-sensor-page .pacom-gallery-item .pacom-photo-button { background: #fff; }
+.pacom-sensor-page .pacom-spec-row dd { white-space: pre-line; }
+.pacom-device-prose { max-width: 760px; }
+.pacom-device-prose section { margin: 0 0 32px; }
+.pacom-device-prose h2 { color: var(--pacom-heading); font-size: 20px; font-weight: 600; line-height: 28px; margin: 0 0 12px; }
+.pacom-device-prose p { font-size: 14px; line-height: 24px; margin: 0; }
+.pacom-device-prose nav { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 12px; }
+.pacom-device-prose a { color: #00aeef; font-size: 14px; line-height: 24px; text-decoration: none; }
+.pacom-device-prose a:hover { text-decoration: underline; }

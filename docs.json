@@ -84,30 +84,14 @@
                 ]
               },
               {
-                "group": "参考资料",
+                "group": "术语表",
                 "pages": [
                   "glossary/index",
                   {
-                    "group": "词汇分类",
+                    "group": "基础概念",
                     "expanded": false,
                     "pages": [
                       "glossary/fundamentals",
-                      "glossary/systems-controls",
-                      "glossary/protocols-standards",
-                      "glossary/connectivity",
-                      "glossary/data-software",
-                      "glossary/energy-sustainability",
-                      "glossary/health-occupancy",
-                      "glossary/certifications-ratings",
-                      "glossary/building-types",
-                      "glossary/ai"
-                    ]
-                  },
-                  {
-                    "group": "词汇详情",
-                    "hidden": true,
-                    "searchable": true,
-                    "pages": [
                       "glossary/terms/building-automation",
                       "glossary/terms/building-envelope",
                       "glossary/terms/commissioning",
@@ -125,7 +109,14 @@
                       "glossary/terms/soft-landings",
                       "glossary/terms/split-incentive",
                       "glossary/terms/trias-energetica",
-                      "glossary/terms/vendor-lock-in",
+                      "glossary/terms/vendor-lock-in"
+                    ]
+                  },
+                  {
+                    "group": "系统与控制",
+                    "expanded": false,
+                    "pages": [
+                      "glossary/systems-controls",
                       "glossary/terms/access-control",
                       "glossary/terms/air-handling-unit",
                       "glossary/terms/automated-shading",
@@ -156,7 +147,14 @@
                       "glossary/terms/variable-refrigerant-flow",
                       "glossary/terms/variable-speed-drive",
                       "glossary/terms/video-analytics",
-                      "glossary/terms/visitor-management",
+                      "glossary/terms/visitor-management"
+                    ]
+                  },
+                  {
+                    "group": "协议与标准",
+                    "expanded": false,
+                    "pages": [
+                      "glossary/protocols-standards",
                       "glossary/terms/ashrae-223p",
                       "glossary/terms/bacnet",
                       "glossary/terms/bluetooth-low-energy",
@@ -178,7 +176,14 @@
                       "glossary/terms/project-haystack",
                       "glossary/terms/realestatecore",
                       "glossary/terms/thread",
-                      "glossary/terms/zigbee",
+                      "glossary/terms/zigbee"
+                    ]
+                  },
+                  {
+                    "group": "连接与通信",
+                    "expanded": false,
+                    "pages": [
+                      "glossary/connectivity",
                       "glossary/terms/converged-network",
                       "glossary/terms/distributed-antenna-system",
                       "glossary/terms/lorawan",
@@ -189,7 +194,14 @@
                       "glossary/terms/small-cell",
                       "glossary/terms/structured-cabling",
                       "glossary/terms/telecoms-riser",
-                      "glossary/terms/wi-fi-6",
+                      "glossary/terms/wi-fi-6"
+                    ]
+                  },
+                  {
+                    "group": "数据与软件",
+                    "expanded": false,
+                    "pages": [
+                      "glossary/data-software",
                       "glossary/terms/anomaly-detection",
                       "glossary/terms/api",
                       "glossary/terms/artificial-intelligence",
@@ -215,7 +227,14 @@
                       "glossary/terms/time-series-database",
                       "glossary/terms/trend-log",
                       "glossary/terms/wayfinding",
-                      "glossary/terms/zero-trust",
+                      "glossary/terms/zero-trust"
+                    ]
+                  },
+                  {
+                    "group": "能源与可持续发展",
+                    "expanded": false,
+                    "pages": [
+                      "glossary/energy-sustainability",
                       "glossary/terms/battery-storage",
                       "glossary/terms/biobased-materials",
                       "glossary/terms/biodiversity",
@@ -262,7 +281,14 @@
                       "glossary/terms/urban-mining",
                       "glossary/terms/vehicle-to-grid",
                       "glossary/terms/water-recycling",
-                      "glossary/terms/whole-life-carbon",
+                      "glossary/terms/whole-life-carbon"
+                    ]
+                  },
+                  {
+                    "group": "健康与空间使用",
+                    "expanded": false,
+                    "pages": [
+                      "glossary/health-occupancy",
                       "glossary/terms/acoustic-comfort",
                       "glossary/terms/biophilic-design",
                       "glossary/terms/circadian-lighting",
@@ -275,7 +301,14 @@
                       "glossary/terms/sick-building-syndrome",
                       "glossary/terms/thermal-comfort",
                       "glossary/terms/ventilation-rate",
-                      "glossary/terms/vocs",
+                      "glossary/terms/vocs"
+                    ]
+                  },
+                  {
+                    "group": "认证与评级",
+                    "expanded": false,
+                    "pages": [
+                      "glossary/certifications-ratings",
                       "glossary/terms/breeam",
                       "glossary/terms/corporate-sustainability-reporting-directive",
                       "glossary/terms/dgnb",
@@ -299,7 +332,14 @@
                       "glossary/terms/smart-readiness-indicator",
                       "glossary/terms/smartscore",
                       "glossary/terms/well",
-                      "glossary/terms/wiredscore",
+                      "glossary/terms/wiredscore"
+                    ]
+                  },
+                  {
+                    "group": "建筑类型",
+                    "expanded": false,
+                    "pages": [
+                      "glossary/building-types",
                       "glossary/terms/affordable-housing",
                       "glossary/terms/animal-care-facility",
                       "glossary/terms/campus",
@@ -325,8 +365,16 @@
                       "glossary/terms/stadium-and-arena",
                       "glossary/terms/tall-building",
                       "glossary/terms/transport-building",
-                      "glossary/terms/warehouse-and-distribution-centre",
-                      "glossary/terms/large-language-model"
+                      "glossary/terms/warehouse-and-distribution-centre"
+                    ]
+                  },
+                  {
+                    "group": "补充术语",
+                    "hidden": true,
+                    "searchable": true,
+                    "pages": [
+                      "glossary/terms/large-language-model",
+                      "glossary/ai"
                     ]
                   }
                 ]

@@ -9,8 +9,31 @@ SRC=args.source
 OUT=args.report_dir
 OUT.mkdir(parents=True,exist_ok=True)
 entries=json.loads(SRC.read_text())
+# Apply the requested public-name cleanup to both archived and current inputs.
+removed_name_notes=(
+ '〔NTi中文用语〕','〔香港政府用语〕','〔政府救护及TAF生物风险管理资料用语〕',
+ '〔香港机电工程署建筑运维用语〕','〔路创、尚飞中文用语〕','〔浙江省导则用语〕',
+ '〔西门子中文资料用语〕','〔本词主要指外围护部分〕','〔企业中文用语〕','〔GB 50314语境〕',
+ '〔NREL中文用语〕','〔华为及建筑设计企业用语〕','〔SBTi用语〕','〔SMUD中文用语〕',
+ '〔中瑞合作研究用语〕','建研所用语：','〔公共机构标准用语〕','〔厂商中文用语〕',
+ '；中文转述名','〔其历史中文指引用语〕','〔飞利浦产品用语〕','〔通力用语〕',
+ '〔江苏省质量和标准化研究院平台用语〕','〔GRESB用语〕','〔空调自然冷却语境〕',
+ '〔施耐德、西门子中文用语〕','〔须区分语境〕','〔IFRS／GRESB用语〕',
+ '〔政府及IEA中文用语〕','〔不同政府中文用语〕',
+ '〔HPE用语〕','；IPCC AR6用语','〔Google Cloud中文技术文档用语〕','〔RMI用语〕',
+ '〔WHO用语〕','〔标准类别用语〕','〔建筑空间／设施语境〕','；亦称大型语言模型',
+ '；能源与环境设计先锋〔GBCI中文用语〕','〔DGNB中文用语〕','〔Tridium用语〕',
+ '〔香港规划用语〕','〔USGBC用语〕','〔政府中文用语〕',
+ '〔AWS、工研院中文用语〕','〔并列设施类别〕','〔厂商用语〕',
+ '〔GB/T50155暖通语境〕','〔IURC China项目中文用语〕',
+)
+entries=[dict(e) for e in entries if e['id']!='enocean']
+for e in entries:
+ for note in removed_name_notes:e['zh_display']=e['zh_display'].replace(note,'')
+obsolete_page=ROOT/'glossary/terms/enocean.mdx'
+if obsolete_page.exists():obsolete_page.unlink()
 categories=[('Fundamentals','fundamentals','基础概念'),('Systems & controls','systems-controls','系统与控制'),('Protocols & standards','protocols-standards','协议与标准'),('Connectivity','connectivity','网络与通信'),('Data & software','data-software','数据与软件'),('Energy & sustainability','energy-sustainability','能源与可持续发展'),('Health & occupancy','health-occupancy','室内环境与空间使用'),('Certifications & ratings','certifications-ratings','认证、评级与合规'),('Building types','building-types','建筑与项目类型')]
-assert len(entries)==219 and len({x['id'] for x in entries})==219
+assert len(entries)==len({x['id'] for x in entries})
 assert entries[-1]['id']=='large-language-model' and entries[-1]['number']==219
 bycat={a:(b,c) for a,b,c in categories}
 # AI is the source registry marker for the supplementary LLM entry, not a tenth visible category.
@@ -59,14 +82,14 @@ for en,slug,cn in categories:
 # Keep the former AI URL reachable without presenting an additional public category.
 llm=next(e for e in entries if e['id']=='large-language-model')
 write('glossary/ai.mdx',fm(title='AI 词条',description='原站注册信息中的 AI 标记，保留旧链接访问。',hideFooterPagination=True)+link('术语表概览','/glossary/index')+'\n\n原站公开目录按九类列示。大语言模型词条的原站分类标记为 AI，保留在全部术语中检索。\n\n'+link(llm['zh_display'],'/glossary/terms/'+llm['id'])+'\n\n'+md(llm['definition_zh'])+'\n')
-write('glossary/index.mdx',fm(title='术语表',description='219 条智能建筑中英文术语，涵盖建筑控制、通信、数据、能源及认证。',sidebarTitle='术语表',mode='wide',hideFooterPagination=True)+'''import { GlossaryIndex } from "/snippets/glossary-index.jsx";
+write('glossary/index.mdx',fm(title='术语表',description=f'{len(entries)} 条智能建筑中英文术语，涵盖建筑控制、通信、数据、能源及认证。',sidebarTitle='术语表',mode='wide',hideFooterPagination=True)+'''import { GlossaryIndex } from "/snippets/glossary-index.jsx";
 
 <GlossaryIndex />
 
 <details>
 <summary>编写说明与来源</summary>
 
-英文词目参考 [Smart Building Database](https://smartbuildingdatabase.com/tools/glossary)。中文名称、释义及适用范围依据各词条列明的资料整理；名称中的 **〔企业〕**、**〔用途类别对应〕** 等标记保留来源语境。点击术语可查阅完整依据和参考来源。
+英文词目参考 [Smart Building Database](https://smartbuildingdatabase.com/tools/glossary)。中文名称、释义及适用范围依据各词条列明的资料整理。点击术语可查阅完整依据和参考来源。
 
 资料复核日期：2026-11-05
 
@@ -95,11 +118,12 @@ tab['groups'].append({'group':'术语兼容页面','hidden':True,'searchable':Fa
 write('docs.json',json.dumps(config,ensure_ascii=False,indent=2)+'\n')
 dev=(ROOT/'developers/index.mdx').read_text()
 old='\n\n## 参考词汇\n\n[智能建筑词汇](/glossary/index)收录 219 条中英文词汇，可按主题分类和关键词查阅名称、释义与来源。'
-new='\n\n## 术语表\n\n[术语表](/glossary/index)收录 219 条中英文术语，可按字母索引和关键词查阅名称、释义与来源。'
+new=f'\n\n## 术语表\n\n[术语表](/glossary/index)收录 {len(entries)} 条中英文术语，可按字母索引和关键词查阅名称、释义与来源。'
 dev=dev.replace('可按原站九类目录和关键词查阅名称、释义与来源。','可按字母索引和关键词查阅名称、释义与来源。')
+dev=re.sub(r'(\[术语表\]\(/glossary/index\)收录 )\d+( 条中英文术语)',lambda m:m[1]+str(len(entries))+m[2],dev)
 if old in dev:dev=dev.replace(old,new)
 elif new not in dev:dev=dev.rstrip()+new+'\n'
 write('developers/index.mdx',dev)
-report={'count':len(entries),'unique_ids':len({e['id']for e in entries}),'categories':{cn:sum(e['category']==en for e in entries)for en,_,cn in categories},'source_citations':sum(len(e['sources'])for e in entries),'unique_source_urls':len({s['url']for e in entries for s in e['sources']}),'immutable_input_sha256':hashlib.sha256(SRC.read_bytes()).hexdigest(),'public_source_check_omission':'7 research-process notes omitted from public data; naming, evidence, scopes and all references retained. Original supplied file unchanged.','llm_id':entries[-1]['id'],'sidebar_subcategories':0,'page_topic_filters':len(categories),'index_layout':'Introduction: topic filters, alphabet anchors and all term rows','supplementary_terms':[e['id'] for e in entries if e['category'] not in {c[0]for c in categories}],'files':paths}
+report={'count':len(entries),'unique_ids':len({e['id']for e in entries}),'categories':{cn:sum(e['category']==en for e in entries)for en,_,cn in categories},'source_citations':sum(len(e['sources'])for e in entries),'unique_source_urls':len({s['url']for e in entries for s in e['sources']}),'immutable_input_sha256':hashlib.sha256(SRC.read_bytes()).hexdigest(),'public_source_check_omission':'Research-process notes excluded from public data. Requested display-name notes and EnOcean removed; definitions, evidence, scopes and references retained for the remaining terms.','llm_id':entries[-1]['id'],'sidebar_subcategories':0,'page_topic_filters':len(categories),'index_layout':'Introduction: topic filters, alphabet anchors and all term rows','supplementary_terms':[e['id'] for e in entries if e['category'] not in {c[0]for c in categories}],'files':paths}
 (OUT/'manifest.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps({k:v for k,v in report.items()if k!='files'},ensure_ascii=False,indent=2));print('files',len(paths))

@@ -17,7 +17,8 @@ export const GlossaryIndex = () => {
       .pacom-glossary-topics button{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0;min-height:50px;padding:12px 14px;border:1px solid var(--gl-border);border-radius:6px;background:transparent;color:inherit;text-align:left;font:inherit;cursor:pointer}
       .pacom-glossary-topics button:hover{background:var(--gl-surface)}
       .pacom-glossary-topics button[aria-pressed=true]{border-color:#007eaf;background:rgba(0,174,239,.06)}
-      .pacom-glossary-topics small{flex-shrink:0;font-size:11px;letter-spacing:.04em;color:var(--gl-muted);white-space:nowrap}
+      .pacom-glossary-topics small{display:flex;align-items:center;gap:8px;flex-shrink:0;font-size:11px;letter-spacing:.04em;color:var(--gl-muted);white-space:nowrap}
+      .pacom-glossary-topic-clear{font-size:16px;line-height:1;color:var(--gl-ink)}
       .pacom-glossary-toolbar{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:20px}
       .pacom-glossary-search{width:min(100%,360px)}
       .pacom-glossary-search label{display:block;margin-bottom:6px;font-size:12px;color:var(--gl-muted)}
@@ -48,7 +49,7 @@ export const GlossaryIndex = () => {
     `}</style>
 
     <nav className="pacom-glossary-topics" aria-label="主题筛选">
-      {GlossaryCategories.map(item => <button key={item.id} type="button" aria-label={"按主题筛选：" + item.name} aria-pressed={category === item.id} onClick={() => setCategory(category === item.id ? "" : item.id)}><span>{item.name}</span><small>{item.count} 条</small></button>)}
+      {GlossaryCategories.map(item => <button key={item.id} type="button" aria-label={"按主题筛选：" + item.name} aria-pressed={category === item.id} title={category === item.id ? "再次点击取消筛选" : "选择" + item.name} onClick={() => setCategory(current => current === item.id ? "" : item.id)}><span>{item.name}</span><small>{item.count} 条{category === item.id && <span className="pacom-glossary-topic-clear" aria-hidden="true">×</span>}</small></button>)}
     </nav>
 
     <div className="pacom-glossary-toolbar">

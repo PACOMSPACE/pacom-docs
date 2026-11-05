@@ -6,7 +6,7 @@ export const GlossaryIndex = () => {
   const [category, setCategory] = useState("");
   const normalize = value => value.normalize("NFKC").toLocaleLowerCase().replace(/\s+/g, " ").trim();
   const words = normalize(query).split(" ").filter(Boolean);
-  const results = GlossaryEntries.filter(entry => (!category || entry.category === category) && words.every(word => normalize([entry.en, entry.zh_display, entry.definition_zh, entry.scope_note, entry.name_basis, entry.evidence_note].join(" ")).includes(word)));
+  const results = GlossaryEntries.filter(entry => (!category || entry.category === category) && words.every(word => normalize([entry.en, entry.zh_display, entry.definition_zh].join(" ")).includes(word)));
   const letters = [...new Set(results.map(entry => entry.en[0].toUpperCase()))];
 
   return <div className="pacom-glossary-intro not-prose">
@@ -35,7 +35,6 @@ export const GlossaryIndex = () => {
       .pacom-glossary-rows{list-style:none;margin:0;padding:0}
       .pacom-glossary-rows li{margin:0;padding:0;border-bottom:1px solid var(--gl-border)}
       .pacom-glossary-row{display:grid;grid-template-columns:minmax(180px,.85fr) minmax(0,1.4fr);gap:28px;padding:18px 0;color:inherit;text-decoration:none;overflow-wrap:anywhere}
-      .pacom-glossary-row:hover{background:var(--gl-surface)}
       .pacom-glossary-name{display:block;min-width:0}
       .pacom-glossary-en{display:block;font-size:14px;font-weight:600;line-height:1.5}
       .pacom-glossary-zh{display:block;margin-top:5px;color:var(--gl-muted);font-size:13px;line-height:1.65}
@@ -61,7 +60,7 @@ export const GlossaryIndex = () => {
 
     {letters.map(letter => <section className="pacom-glossary-letter" id={"letter-" + letter} key={letter} aria-labelledby={"heading-" + letter}>
       <h2 id={"heading-" + letter}>{letter}</h2>
-      <ul className="pacom-glossary-rows">{results.filter(entry => entry.en[0].toUpperCase() === letter).map(entry => <li key={entry.id}><a className="pacom-glossary-row" href={"/glossary/terms/" + entry.id}><span className="pacom-glossary-name"><span className="pacom-glossary-en" lang="en">{entry.en}</span><span className="pacom-glossary-zh">{entry.zh_display}</span></span><span className="pacom-glossary-definition">{entry.definition_zh}</span></a></li>)}</ul>
+      <ul className="pacom-glossary-rows">{results.filter(entry => entry.en[0].toUpperCase() === letter).map(entry => <li key={entry.id}><div className="pacom-glossary-row"><span className="pacom-glossary-name"><span className="pacom-glossary-en" lang="en">{entry.en}</span><span className="pacom-glossary-zh">{entry.zh_display}</span></span><span className="pacom-glossary-definition">{entry.definition_zh}</span></div></li>)}</ul>
     </section>)}
 
     {results.length === 0 && <p className="pacom-glossary-empty">没有匹配术语。可尝试其他关键词或清除筛选。</p>}

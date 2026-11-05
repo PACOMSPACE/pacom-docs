@@ -59,7 +59,7 @@ for en,slug,cn in categories:
 # Keep the former AI URL reachable without presenting an additional public category.
 llm=next(e for e in entries if e['id']=='large-language-model')
 write('glossary/ai.mdx',fm(title='AI 词条',description='原站注册信息中的 AI 标记，保留旧链接访问。',hideFooterPagination=True)+link('术语表概览','/glossary/index')+'\n\n原站公开目录按九类列示。大语言模型词条的原站分类标记为 AI，保留在全部术语中检索。\n\n'+link(llm['zh_display'],'/glossary/terms/'+llm['id'])+'\n\n'+md(llm['definition_zh'])+'\n')
-write('glossary/index.mdx',fm(title='术语表',description='219 条智能建筑中英文术语，涵盖建筑控制、通信、数据、能源及认证。',sidebarTitle='简介',mode='wide',hideFooterPagination=True)+'''import { GlossaryIndex } from "/snippets/glossary-index.jsx";
+write('glossary/index.mdx',fm(title='术语表',description='219 条智能建筑中英文术语，涵盖建筑控制、通信、数据、能源及认证。',sidebarTitle='术语表',mode='wide',hideFooterPagination=True)+'''import { GlossaryIndex } from "/snippets/glossary-index.jsx";
 
 <GlossaryIndex />
 
@@ -82,8 +82,8 @@ write('snippets/glossary-index.jsx',component)
 # Match the current remote navigation and leave its two top-level tabs intact.
 config=json.loads((ROOT/'docs.json').read_text())
 tab=next(t for t in config['navigation']['languages'][0]['tabs'] if t['tab']=='产品文档')
-glossary_group={'group':'术语表','pages':['glossary/index']}
-positions=[i for i,g in enumerate(tab['groups']) if g['group'] in ('参考资料','术语表')]
+glossary_group={'group':'工具','pages':['glossary/index']}
+positions=[i for i,g in enumerate(tab['groups']) if g['group'] in ('参考资料','术语表','工具')]
 if positions:
  tab['groups'][positions[0]]=glossary_group
  for i in reversed(positions[1:]):del tab['groups'][i]

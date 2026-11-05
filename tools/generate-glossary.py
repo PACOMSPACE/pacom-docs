@@ -9,7 +9,7 @@ SRC=args.source
 OUT=args.report_dir
 OUT.mkdir(parents=True,exist_ok=True)
 entries=json.loads(SRC.read_text())
-categories=[('Fundamentals','fundamentals','基础概念'),('Systems & controls','systems-controls','系统与控制'),('Protocols & standards','protocols-standards','协议与标准'),('Connectivity','connectivity','连接与通信'),('Data & software','data-software','数据与软件'),('Energy & sustainability','energy-sustainability','能源与可持续发展'),('Health & occupancy','health-occupancy','健康与空间使用'),('Certifications & ratings','certifications-ratings','认证与评级'),('Building types','building-types','建筑类型')]
+categories=[('Fundamentals','fundamentals','基础概念'),('Systems & controls','systems-controls','系统与控制'),('Protocols & standards','protocols-standards','协议与标准'),('Connectivity','connectivity','网络与通信'),('Data & software','data-software','数据与软件'),('Energy & sustainability','energy-sustainability','能源与可持续发展'),('Health & occupancy','health-occupancy','室内环境与空间使用'),('Certifications & ratings','certifications-ratings','认证、评级与合规'),('Building types','building-types','建筑与项目类型')]
 assert len(entries)==219 and len({x['id'] for x in entries})==219
 assert entries[-1]['id']=='large-language-model' and entries[-1]['number']==219
 bycat={a:(b,c) for a,b,c in categories}

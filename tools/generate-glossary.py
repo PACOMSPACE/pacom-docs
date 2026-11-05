@@ -1,7 +1,7 @@
 from pathlib import Path
 import json,re,html,hashlib,collections,argparse
 ROOT=Path(__file__).resolve().parents[1]
-parser=argparse.ArgumentParser(description="Generate the PACOM glossary with the source site's nine visible categories.")
+parser=argparse.ArgumentParser(description="Generate the PACOM glossary Introduction page with a flat sidebar and A-Z rows.")
 parser.add_argument('--source',type=Path,default=ROOT/'glossary/data.json')
 parser.add_argument('--report-dir',type=Path,required=True)
 args=parser.parse_args()
@@ -59,74 +59,47 @@ for en,slug,cn in categories:
 # Keep the former AI URL reachable without presenting an additional public category.
 llm=next(e for e in entries if e['id']=='large-language-model')
 write('glossary/ai.mdx',fm(title='AI 词条',description='原站注册信息中的 AI 标记，保留旧链接访问。',hideFooterPagination=True)+link('术语表概览','/glossary/index')+'\n\n原站公开目录按九类列示。大语言模型词条的原站分类标记为 AI，保留在全部术语中检索。\n\n'+link(llm['zh_display'],'/glossary/terms/'+llm['id'])+'\n\n'+md(llm['definition_zh'])+'\n')
-write('glossary/index.mdx',fm(title='术语表',description='219 条中英文术语，按原站九类目录查阅和检索。',sidebarTitle='概览',mode='wide',hideFooterPagination=True)+'''import { GlossaryIndex } from "/snippets/glossary-index.jsx";
-
-英文词目来自 [Smart Building Database](https://smartbuildingdatabase.com/tools/glossary)。中文命名与释义依据各条列明的资料整理，保留英文专名及来源语境。名称中的 **〔企业〕**、**〔用途类别对应〕** 等标记表示名称依据与适用范围，详见词条详情。
-
-本表是依据来源整理的中文说明，不是某一标准定义的逐字原文，也不是原站已有的中文版本。
-
-目录按原站九类列示，另保留源站已发布但未列入该目录的大语言模型词条，可在全部术语中检索。
+write('glossary/index.mdx',fm(title='术语表',description='219 条智能建筑中英文术语，涵盖建筑控制、通信、数据、能源及认证。',sidebarTitle='简介',mode='wide',hideFooterPagination=True)+'''import { GlossaryIndex } from "/snippets/glossary-index.jsx";
 
 <GlossaryIndex />
 
-## 按类别查阅
+<details>
+<summary>编写说明与来源</summary>
 
-'''+''.join('- '+link(cn+'（'+str(sum(e['category']==en for e in entries))+'）','/glossary/'+slug)+'\n' for en,slug,cn in categories)+'\n资料复核日期：2026-11-05\n')
+英文词目参考 [Smart Building Database](https://smartbuildingdatabase.com/tools/glossary)。中文名称、释义及适用范围依据各词条列明的资料整理；名称中的 **〔企业〕**、**〔用途类别对应〕** 等标记保留来源语境。点击术语可查阅完整依据和参考来源。
+
+资料复核日期：2026-11-05
+
+</details>
+''')
 # Public data preserves every naming/scope/citation field. Local research-log paths stay in the immutable source file.
 write('glossary/data.json',json.dumps(public,ensure_ascii=False,indent=2)+'\n')
 indexdata=[{k:e[k] for k in ['id','en','zh_display','definition_zh','scope_note','name_basis','evidence_note']}|{'category':bycat[e['category']][0]} for e in entries]
 indexdata.sort(key=lambda x:x['en'].casefold())
-component='''export const GlossaryEntries = __ENTRIES__;
-export const GlossaryCategories = __CATEGORIES__;
-export const GlossaryIndex = () => {
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("");
-  const [limit, setLimit] = useState(40);
-  const normalize = (value) => value.normalize("NFKC").toLocaleLowerCase().replace(/\\s+/g, " ").trim();
-  const words = normalize(query).split(" ").filter(Boolean);
-  const results = GlossaryEntries.filter(entry => (!category || entry.category === category) && words.every(word => normalize([entry.en, entry.zh_display, entry.definition_zh, entry.scope_note, entry.name_basis, entry.evidence_note].join(" ")).includes(word)));
-  const changeQuery = value => { setQuery(value); setLimit(40); };
-  const changeCategory = value => { setCategory(value); setLimit(40); };
-  return <div className="pacom-glossary not-prose">
-    <style>{__CSS__}</style>
-    <div className="pacom-glossary-controls">
-      <div className="pacom-glossary-search"><label htmlFor="glossary-search">搜索术语</label><input id="glossary-search" type="search" value={query} onChange={event => changeQuery(event.target.value)} placeholder="输入中文、英文、缩写或释义关键词" autoComplete="off" /></div>
-      <div className="pacom-glossary-category"><label htmlFor="glossary-category">主题分类</label><select id="glossary-category" value={category} onChange={event => changeCategory(event.target.value)}><option value="">全部术语</option>{GlossaryCategories.map(item => <option key={item.id} value={item.id}>{item.name}（{item.count}）</option>)}</select></div>
-    </div>
-    <div className="pacom-glossary-status"><p role="status" aria-live="polite">共 {results.length} 条{results.length > limit ? "，当前显示 " + limit + " 条" : ""} · 按英文名称排序</p>{(query || category) && <button type="button" onClick={() => {changeQuery("");changeCategory("");}}>清除筛选</button>}</div>
-    <ul className="pacom-glossary-results" aria-label="术语检索结果">{results.slice(0, limit).map(entry => <li key={entry.id}><a href={"/glossary/terms/" + entry.id}><span className="pacom-glossary-en" lang="en">{entry.en}</span><span className="pacom-glossary-zh">{entry.zh_display}</span><span className="pacom-glossary-definition">{entry.definition_zh}</span><span className="pacom-glossary-tag">{(GlossaryCategories.find(item => item.id === entry.category)?.name || (entry.category === "ai" ? "AI · 原站分类标记" : "原站补充词条"))}<span aria-hidden="true"> ↗</span></span></a></li>)}</ul>
-    {results.length === 0 && <p className="pacom-glossary-empty">没有匹配术语。可尝试英文缩写、中文名称或切换分类。</p>}
-    {results.length > limit && <button type="button" className="pacom-glossary-more" onClick={() => setLimit(limit + 40)}>显示更多术语（剩余 {results.length - limit} 条）</button>}
-  </div>;
-};
-'''
-css='''
-.pacom-glossary{--glossary-border:#e5e7eb;--glossary-muted:#626875;--glossary-ink:#202a44;margin:24px 0 32px;color:var(--glossary-ink);font-family:var(--pacom-font-sans);font-size:14px;line-height:1.6}
-.pacom-glossary *{box-sizing:border-box}.pacom-glossary-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,240px);gap:16px}.pacom-glossary label{display:block;margin:0 0 8px;font-size:14px;font-weight:600}.pacom-glossary input,.pacom-glossary select{width:100%;min-width:0;min-height:44px;margin:0;padding:10px 12px;border:1px solid var(--glossary-border);border-radius:6px;color:inherit;background:transparent;font:inherit}.pacom-glossary input::placeholder{color:var(--glossary-muted)}
-.pacom-glossary-status{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:16px 0}.pacom-glossary-status p{margin:0;color:var(--glossary-muted);font-size:13px}.pacom-glossary-status button{flex-shrink:0;border:0;background:transparent;color:#007eaf;font:inherit;cursor:pointer;padding:4px 0}.pacom-glossary-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:0;margin:0;list-style:none}.pacom-glossary-results li{padding:0;margin:0;min-width:0}.pacom-glossary-results a{display:flex;flex-direction:column;height:100%;padding:20px;border:1px solid var(--glossary-border);border-radius:8px;color:inherit;text-decoration:none;overflow-wrap:anywhere}.pacom-glossary-results a:hover{border-color:#00aeef;background:rgba(0,174,239,.035)}.pacom-glossary-en{font-size:16px;font-weight:600;line-height:1.4}.pacom-glossary-zh{display:block;font-weight:500;line-height:1.6;margin-top:6px}.pacom-glossary-definition{display:block;margin-top:10px;color:var(--glossary-muted);font-size:13px;line-height:1.65}.pacom-glossary-tag{display:block;margin-top:auto;padding-top:14px;color:var(--glossary-muted);font-size:12px}.pacom-glossary-tag span{color:#007eaf}.pacom-glossary-more{display:block;min-height:44px;margin:24px auto 0;padding:10px 20px;border:1px solid var(--glossary-border);border-radius:6px;background:transparent;color:inherit;font:inherit;cursor:pointer}.pacom-glossary-empty{padding:24px 0;color:var(--glossary-muted)}.pacom-glossary a:focus-visible,.pacom-glossary button:focus-visible,.pacom-glossary input:focus-visible,.pacom-glossary select:focus-visible{outline:2px solid #00aeef;outline-offset:3px}.dark .pacom-glossary{--glossary-border:#383b42;--glossary-muted:#a8aab2;--glossary-ink:#e5e7eb}.dark .pacom-glossary-status button,.dark .pacom-glossary-tag span{color:#00aeef}@media(max-width:640px){.pacom-glossary-controls,.pacom-glossary-results{grid-template-columns:minmax(0,1fr)}.pacom-glossary-controls{gap:12px}.pacom-glossary-results a{padding:16px}.pacom-glossary-status{align-items:flex-start}.pacom-glossary-en{font-size:16px}}
-'''
-component=component.replace('__ENTRIES__',json.dumps(indexdata,ensure_ascii=False)).replace('__CATEGORIES__',json.dumps([{'id':slug,'name':cn,'count':sum(e['category']==en for e in entries)}for en,slug,cn in categories],ensure_ascii=False)).replace('__CSS__',json.dumps(css))
+component=(ROOT/'tools/glossary-index.template.jsx').read_text()
+component=component.replace('__ENTRIES__',json.dumps(indexdata,ensure_ascii=False)).replace('__CATEGORIES__',json.dumps([{'id':slug,'name':cn,'count':sum(e['category']==en for e in entries)}for en,slug,cn in categories],ensure_ascii=False))
 write('snippets/glossary-index.jsx',component)
 # Match the current remote navigation and leave its two top-level tabs intact.
 config=json.loads((ROOT/'docs.json').read_text())
 tab=next(t for t in config['navigation']['languages'][0]['tabs'] if t['tab']=='产品文档')
-glossary_group={'group':'术语表','pages':['glossary/index']+[
- {'group':cn,'expanded':False,'pages':['glossary/'+slug]+['glossary/terms/'+e['id'] for e in entries if e['category']==en]}
- for en,slug,cn in categories]+[
- {'group':'补充术语','hidden':True,'searchable':True,'pages':['glossary/terms/'+e['id'] for e in entries if e['category'] not in {c[0] for c in categories}]+['glossary/ai']}
-]}
+glossary_group={'group':'术语表','pages':['glossary/index']}
 positions=[i for i,g in enumerate(tab['groups']) if g['group'] in ('参考资料','术语表')]
 if positions:
  tab['groups'][positions[0]]=glossary_group
  for i in reversed(positions[1:]):del tab['groups'][i]
 else:tab['groups'].append(glossary_group)
+# Keep detail and compatibility routes searchable/reachable without visible sidebar subdivisions.
+tab['groups']=[g for g in tab['groups'] if g['group'] not in ('术语详情','术语兼容页面')]
+tab['groups'].append({'group':'术语详情','hidden':True,'searchable':True,'pages':['glossary/terms/'+e['id'] for e in entries]})
+tab['groups'].append({'group':'术语兼容页面','hidden':True,'searchable':False,'pages':['glossary/'+slug for _,slug,_ in categories]+['glossary/ai']})
 write('docs.json',json.dumps(config,ensure_ascii=False,indent=2)+'\n')
 dev=(ROOT/'developers/index.mdx').read_text()
 old='\n\n## 参考词汇\n\n[智能建筑词汇](/glossary/index)收录 219 条中英文词汇，可按主题分类和关键词查阅名称、释义与来源。'
-new='\n\n## 术语表\n\n[术语表](/glossary/index)收录 219 条中英文术语，可按原站九类目录和关键词查阅名称、释义与来源。'
+new='\n\n## 术语表\n\n[术语表](/glossary/index)收录 219 条中英文术语，可按字母索引和关键词查阅名称、释义与来源。'
+dev=dev.replace('可按原站九类目录和关键词查阅名称、释义与来源。','可按字母索引和关键词查阅名称、释义与来源。')
 if old in dev:dev=dev.replace(old,new)
 elif new not in dev:dev=dev.rstrip()+new+'\n'
 write('developers/index.mdx',dev)
-report={'count':len(entries),'unique_ids':len({e['id']for e in entries}),'categories':{cn:sum(e['category']==en for e in entries)for en,_,cn in categories},'source_citations':sum(len(e['sources'])for e in entries),'unique_source_urls':len({s['url']for e in entries for s in e['sources']}),'immutable_input_sha256':hashlib.sha256(SRC.read_bytes()).hexdigest(),'public_source_check_omission':'7 research-process notes omitted from public data; naming, evidence, scopes and all references retained. Original supplied file unchanged.','llm_id':entries[-1]['id'],'visible_category_count':len(categories),'supplementary_terms':[e['id'] for e in entries if e['category'] not in {c[0]for c in categories}],'files':paths}
+report={'count':len(entries),'unique_ids':len({e['id']for e in entries}),'categories':{cn:sum(e['category']==en for e in entries)for en,_,cn in categories},'source_citations':sum(len(e['sources'])for e in entries),'unique_source_urls':len({s['url']for e in entries for s in e['sources']}),'immutable_input_sha256':hashlib.sha256(SRC.read_bytes()).hexdigest(),'public_source_check_omission':'7 research-process notes omitted from public data; naming, evidence, scopes and all references retained. Original supplied file unchanged.','llm_id':entries[-1]['id'],'sidebar_subcategories':0,'page_topic_filters':len(categories),'index_layout':'Introduction: topic filters, alphabet anchors and all term rows','supplementary_terms':[e['id'] for e in entries if e['category'] not in {c[0]for c in categories}],'files':paths}
 (OUT/'manifest.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps({k:v for k,v in report.items()if k!='files'},ensure_ascii=False,indent=2));print('files',len(paths))

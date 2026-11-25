@@ -7,7 +7,7 @@
 - Use Simplified Chinese for the initial site.
 - Keep two top-level entries: 产品文档 for customers, installers, and operators; 开发文档 for developers and integrators.
 - Pages are MDX files with YAML frontmatter. Site configuration is in `docs.json`.
-- Use the Mintlify `mint` theme and PACOM's approved light/dark logo assets. The brand navy is `#202A44`.
+- Use the Mintlify `luma` theme and PACOM's approved light/dark logo assets. The brand navy is `#202A44`.
 
 ## Content
 

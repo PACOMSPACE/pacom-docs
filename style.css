@@ -180,6 +180,13 @@ img.nav-logo {
   line-height: 20px;
   padding-bottom: 48px;
 }
+
+/* Luma's frame layout starts at the navbar and sidebar edges. */
+:where([data-docs-theme="luma"]) :is(.pacom-eg20-page, .pacom-device-page) {
+  padding-block-start: clamp(24px, 3vw, 40px);
+  padding-inline: clamp(16px, 2.5vw, 32px);
+}
+
 .pacom-device-header {
   display: block;
   margin: 0 !important;

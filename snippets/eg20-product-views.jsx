@@ -14,6 +14,11 @@ export const EG20Viewer = ({ icons = {} }) => {
   }, [zoomed]);
 
   const base = "/images/devices/eg20/";
+  const loadingFor = (tab) => active === tab ? "eager" : "lazy";
+  const renderImage = (view, width, height, loading, style) => <picture key={view.file}>
+    <source srcSet={base + view.file.replace(/\.png$/, ".webp")} type="image/webp" />
+    <img src={base + view.file} alt={view.alt} width={width} height={height} loading={loading} draggable="false" style={style} />
+  </picture>;
   const views = {
     rear: {
       name: "背面接口", file: "eg20-rear-ports.png", crop: [120, 1080, 2760, 840],
@@ -84,10 +89,12 @@ export const EG20Viewer = ({ icons = {} }) => {
     },
   ];
 
-  const renderDrawing = (drawing) => {
+  const renderDrawing = (drawing, loading) => {
     const [w, h] = drawing.sheet;
     return <span className="pacom-drawing-canvas" style={{ aspectRatio: w + " / " + h, "--pacom-photo-ratio": w / h }}>
-      {drawing.images.map(({ view, left, top, width }) => <img key={view.file} src={base + view.file} alt={view.alt} width="3000" height="3000" loading="lazy" draggable="false" style={{ width: width / w * 100 + "%", left: left / w * 100 + "%", top: top / h * 100 + "%" }} />)}
+      {drawing.images.map(({ view, left, top, width }) => renderImage(view, 3000, 3000, loading, {
+        width: width / w * 100 + "%", left: left / w * 100 + "%", top: top / h * 100 + "%",
+      }))}
       {drawing.labels.map((item, i) => <span key={i} className="pacom-drawing-annotation" aria-hidden="true">
         {item.anchors.map(([ax, ay], j) => <span key={j}>
           <span className="pacom-leader-vertical" style={{ left: ax / w * 100 + "%", top: Math.min(ay, item.line) / h * 100 + "%", height: Math.abs(ay - item.line) / h * 100 + "%" }} />
@@ -101,15 +108,17 @@ export const EG20Viewer = ({ icons = {} }) => {
     </span>;
   };
 
-  const renderPhoto = (view, annotated = false, galleryFrame = false) => {
-    if (view.sheet) return renderDrawing(view);
+  const renderPhoto = (view, annotated = false, galleryFrame = false, loading = "lazy") => {
+    if (view.sheet) return renderDrawing(view, loading);
     const crop = galleryFrame ? [-195, -195, 3390, 3390] : view.crop;
     const [x, y, w, h] = crop || [0, 0, 3840, 2160];
     const px = (value) => (value - x) / w * 100;
     const py = (value) => (value - y) / h * 100;
     return (
       <span className="pacom-photo-canvas" style={{ aspectRatio: w + " / " + h, "--pacom-photo-ratio": w / h }}>
-        <img src={base + view.file} alt={view.alt} width={view.dimensions ? 3840 : 3000} height={view.dimensions ? 2160 : 3000} loading="lazy" draggable="false" style={{ width: (crop ? 3000 / w * 100 : 100) + "%", left: -x / w * 100 + "%", top: -y / h * 100 + "%" }} />
+        {renderImage(view, view.dimensions ? 3840 : 3000, view.dimensions ? 2160 : 3000, loading, {
+          width: (crop ? 3000 / w * 100 : 100) + "%", left: -x / w * 100 + "%", top: -y / h * 100 + "%",
+        })}
         {annotated && (view.labels || []).map((item, i) => {
           const xs = item.anchors.map((point) => px(point[0]));
           const lx = px(item.label[0]);
@@ -139,10 +148,10 @@ export const EG20Viewer = ({ icons = {} }) => {
       <button type="button" onClick={() => setZoomed({ view, annotated })} aria-label={"放大" + view.name}>{icons.zoom}<span className="pacom-action-label">放大</span></button>
     </div>
   );
-  const figure = (view, annotated = false, className = "") => (
+  const figure = (view, annotated = false, className = "", loading = "lazy") => (
     <figure key={view.file} className={"pacom-technical-view " + className}>
       <figcaption className="sr-only">{view.name}</figcaption>
-      <button type="button" className="pacom-photo-button" onClick={() => setZoomed({ view, annotated })} aria-label={"查看" + view.name + "大图"}>{renderPhoto(view, annotated)}</button>
+      <button type="button" className="pacom-photo-button" onClick={() => setZoomed({ view, annotated })} aria-label={"查看" + view.name + "大图"}>{renderPhoto(view, annotated, false, loading)}</button>
       {actions(view, annotated)}
     </figure>
   );
@@ -200,18 +209,18 @@ export const EG20Viewer = ({ icons = {} }) => {
             <summary className="pacom-spec-heading">{icons.chevron}<span>{group.name}</span></summary>
             <dl className="pacom-spec-rows">{group.rows.map(([label, value]) => <div className="pacom-spec-row" key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
           </details>)}</div>
-          <div className="pacom-technical-stack">{drawings.map(view => figure(view, true, "pacom-drawing-sheet"))}</div>
+          <div className="pacom-technical-stack">{drawings.map(view => figure(view, true, "pacom-drawing-sheet", loadingFor(tab.id)))}</div>
         </div>}
         {tab.id === "gallery" && <div className="pacom-gallery-grid">{gallery.map((view) => <figure className="pacom-gallery-item" key={view.file}>
           <figcaption className="sr-only">{view.name}</figcaption>
-          <button type="button" className="pacom-photo-button" aria-label={"查看" + view.name + "大图"} onClick={() => setZoomed({ view, annotated: false })}>{renderPhoto(view, false, true)}</button>
+          <button type="button" className="pacom-photo-button" aria-label={"查看" + view.name + "大图"} onClick={() => setZoomed({ view, annotated: false })}>{renderPhoto(view, false, true, loadingFor(tab.id))}</button>
           {actions(view)}
         </figure>)}</div>}
-        {tab.id === "mounting" && <div>{figure(views.mounting, true, "pacom-mounting-image")}<p className="pacom-device-note">支架图用于辨认安装挂孔和固定螺钉的位置。安装尺寸与操作步骤请以对应版本的安装说明为准。</p></div>}
-        {tab.id === "accessories" && <div>{figure(views.accessories, false, "pacom-accessories-image")}<p className="pacom-device-note">图中展示网关、电源适配器、安装支架、螺钉与快速入门指南。实际随箱物品以所购版本的包装清单为准。</p></div>}
+        {tab.id === "mounting" && <div>{figure(views.mounting, true, "pacom-mounting-image", loadingFor(tab.id))}<p className="pacom-device-note">支架图用于辨认安装挂孔和固定螺钉的位置。安装尺寸与操作步骤请以对应版本的安装说明为准。</p></div>}
+        {tab.id === "accessories" && <div>{figure(views.accessories, false, "pacom-accessories-image", loadingFor(tab.id))}<p className="pacom-device-note">图中展示网关、电源适配器、安装支架、螺钉与快速入门指南。实际随箱物品以所购版本的包装清单为准。</p></div>}
       </div>)}
       <dialog ref={dialogRef} className="pacom-photo-dialog" aria-label={zoomed ? zoomed.view.name + "大图" : "产品大图"} onCancel={() => setZoomed(null)} onClose={() => setZoomed(null)}>
-        {zoomed && <div className="pacom-photo-dialog-content"><div className="pacom-photo-dialog-header"><span>{zoomed.view.name}</span><button type="button" autoFocus onClick={() => setZoomed(null)} aria-label="关闭大图">{icons.close}</button></div><div className="pacom-photo-dialog-image">{renderPhoto(zoomed.view, zoomed.annotated)}</div><div className="pacom-photo-dialog-footer">{(zoomed.view.downloads || [zoomed.view]).map(item => <a key={item.file} href={base + item.file} download>{zoomed.view.downloads ? "下载" + item.name + "原图" : "下载原图"}</a>)}</div></div>}
+        {zoomed && <div className="pacom-photo-dialog-content"><div className="pacom-photo-dialog-header"><span>{zoomed.view.name}</span><button type="button" autoFocus onClick={() => setZoomed(null)} aria-label="关闭大图">{icons.close}</button></div><div className="pacom-photo-dialog-image">{renderPhoto(zoomed.view, zoomed.annotated, false, "eager")}</div><div className="pacom-photo-dialog-footer">{(zoomed.view.downloads || [zoomed.view]).map(item => <a key={item.file} href={base + item.file} download>{zoomed.view.downloads ? "下载" + item.name + "原图" : "下载原图"}</a>)}</div></div>}
       </dialog>
     </div>
   );

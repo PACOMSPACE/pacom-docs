@@ -132,10 +132,13 @@ export const SensorProductViewer = ({ product, icons = {} }) => {
     return () => { if (dialog.open) dialog.close(); };
   }, [zoomed]);
 
-  const photo = (view) => {
+  const photo = (view, loading) => {
     const [x, y, side] = view.crop;
     return <span className="pacom-photo-canvas" style={{ aspectRatio: "1 / 1", "--pacom-photo-ratio": 1 }}>
-      <img src={product.base + view.file} alt={view.alt} width={view.size} height={view.size} loading="lazy" draggable="false" style={{ width: view.size / side * 100 + "%", left: -x / side * 100 + "%", top: -y / side * 100 + "%" }} />
+      <picture>
+        <source srcSet={product.base + view.file.replace(/\.png$/, ".webp")} type="image/webp" />
+        <img src={product.base + view.file} alt={view.alt} width={view.size} height={view.size} loading={loading} draggable="false" style={{ width: view.size / side * 100 + "%", left: -x / side * 100 + "%", top: -y / side * 100 + "%" }} />
+      </picture>
     </span>;
   };
   const actions = (view) => <div className="pacom-image-actions">
@@ -144,7 +147,7 @@ export const SensorProductViewer = ({ product, icons = {} }) => {
   </div>;
   const figure = (view, gallery = false) => <figure key={view.file} className={gallery ? "pacom-gallery-item" : "pacom-technical-view"}>
     <figcaption className="sr-only">{view.name}</figcaption>
-    <button type="button" className="pacom-photo-button" onClick={() => setZoomed(view)} aria-label={"查看" + view.name + "大图"}>{photo(view)}</button>
+    <button type="button" className="pacom-photo-button" onClick={() => setZoomed(view)} aria-label={"查看" + view.name + "大图"}>{photo(view, active === (gallery ? "gallery" : "overview") ? "eager" : "lazy")}</button>
     {actions(view)}
   </figure>;
   const rows = (items) => <dl className="pacom-spec-rows">{items.map(([label, value]) => <div className="pacom-spec-row" key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>;
@@ -171,7 +174,7 @@ export const SensorProductViewer = ({ product, icons = {} }) => {
       {product.sections && product.sections[tab.id] && <div className="pacom-device-prose">{product.sections[tab.id].map(section => <section key={section.title}><h2>{section.title}</h2><p>{section.text}</p>{section.rows && rows(section.rows)}{section.links && <nav aria-label={section.title + "相关资料"}>{section.links.map(([name, href]) => <a key={href} href={href}>{name}</a>)}</nav>}</section>)}</div>}
     </div>)}
     <dialog ref={dialogRef} className="pacom-photo-dialog" aria-label={zoomed ? zoomed.name + "大图" : "产品大图"} onCancel={() => setZoomed(null)} onClose={() => setZoomed(null)}>
-      {zoomed && <div className="pacom-photo-dialog-content"><div className="pacom-photo-dialog-header"><span>{zoomed.name}</span><button type="button" autoFocus onClick={() => setZoomed(null)} aria-label="关闭大图">{icons.close}</button></div><div className="pacom-photo-dialog-image">{photo(zoomed)}</div><div className="pacom-photo-dialog-footer"><a href={product.base + zoomed.file} download>下载原图</a></div></div>}
+      {zoomed && <div className="pacom-photo-dialog-content"><div className="pacom-photo-dialog-header"><span>{zoomed.name}</span><button type="button" autoFocus onClick={() => setZoomed(null)} aria-label="关闭大图">{icons.close}</button></div><div className="pacom-photo-dialog-image">{photo(zoomed, "eager")}</div><div className="pacom-photo-dialog-footer"><a href={product.base + zoomed.file} download>下载原图</a></div></div>}
     </dialog>
   </div>;
 };
